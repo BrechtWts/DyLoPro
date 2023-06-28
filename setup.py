@@ -36,14 +36,10 @@ setup(
         'Topic :: Scientific/Engineering :: Artificial Intelligence', 
         'Topic :: Scientific/Engineering :: Visualization',
     ],
-    description="The DyLoPro Python Library is a visual analytics tool that allows \
-Process Mining (PM) practitioners to efficiently and comprehensively \
-explore the dynamics in event logs over time, prior to applying PM \
-techniques. These comprehensive exploration capabilities are provided \
-by extensive set of plotting functionalities, visualizing the dynamics \
-over time from different process perspectives.",
+    description="Dynamic Log Profiling package",
     install_requires=requirements,
     license="GNU General Public License v3",
+    long_description_content_type="text/markdown",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='DyLoPro',
