@@ -1,37 +1,41 @@
-=======
-DyLoPro
-=======
+# DyLoPro
+"The DyLoPro Python Library is a visual analytics tool that allows Process Mining (PM) practitioners to efficiently and comprehensively explore the dynamics in event logs over time, prior to applying PM techniques. These comprehensive exploration capabilities are provided by extensive set of plotting functionalities, visualizing the dynamics over time from different process perspectives."
 
 
-.. image:: https://img.shields.io/pypi/v/DyLoPro.svg
-        :target: https://pypi.python.org/pypi/DyLoPro
+## Features 
+...
 
-.. image:: https://img.shields.io/travis/BrechtWts/DyLoPro.svg
-        :target: https://travis-ci.com/BrechtWts/DyLoPro
+## Documentation
+You can consult the documentation of DyLoPro [__here__](https://DyLoPro.readthedocs.io). __COMING SOON__
+...
 
-.. image:: https://readthedocs.org/projects/DyLoPro/badge/?version=latest
-        :target: https://DyLoPro.readthedocs.io/en/latest/?version=latest
-        :alt: Documentation Status
+## Installation
+You can install DyLoPro using:
+```bash
+pip install DyLoPro
+```
+
+## Usage Examples
+```python
+import DyLoPro as dlp
+...
+```
+
+## Citing DyLoPro
+...
+
+## Contributing 
+...
+
+## Release Notes
+Please consult HISTORY.md for the release notes. 
+
+## License
+Free software: GNU General Public License v3
 
 
+## Credits 
 
-
-To be filled in later...
-
-
-* Free software: GNU General Public License v3
-* Documentation: https://DyLoPro.readthedocs.io.
-
-
-Features
---------
-
-* TODO
-
-Credits
--------
-
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
-
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+This package was created with Cookiecutter and the `audreyr/cookiecutter-pypackage` project template.
+- Cookiecutter: https://github.com/audreyr/cookiecutter
+- `audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage

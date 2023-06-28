@@ -4,10 +4,10 @@
 
 from setuptools import setup, find_packages
 
-with open('README.rst') as readme_file:
+with open('README.md') as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
+with open('HISTORY.md') as history_file:
     history = history_file.read()
 
 requirements = ['matplotlib>=3.7.1', 
@@ -30,6 +30,11 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Topic :: Scientific/Engineering', 
+        'Topic :: Scientific/Engineering :: Artificial Intelligence', 
+        'Topic :: Scientific/Engineering :: Visualization',
     ],
     description="The DyLoPro Python Library is a visual analytics tool that allows \
 Process Mining (PM) practitioners to efficiently and comprehensively \
