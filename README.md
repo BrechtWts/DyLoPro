@@ -11,9 +11,9 @@ techniques. These **comprehensive exploration capabilities** are provided
 by extensive set of plotting functionalities, visualizing the 
 dynamics over time from different **process perspectives**. 
 
-[1^]: 
-    van der Aalst, W. (2016). Data Science in Action. In: Process Mining. Springer, Berlin, Heidelberg. https://doi.org/10.1007/978-3-662-49851-4_1
-    https://en.wikipedia.org/wiki/Process_mining
+[^1]: van der Aalst, W. (2016). Data Science in Action. In: Process Mining. Springer, Berlin, Heidelberg. https://doi.org/10.1007/978-3-662-49851-4_1
+    
+      https://en.wikipedia.org/wiki/Process_mining
 
 > DyLoPro library is ready-to-use and efficient software implementation of the 
 > identically named **_DyLoPro framework_**, introduced in the paper 
