@@ -15,6 +15,6 @@ by the user.
 """
 __author__ = """Brecht Wuyts """
 __email__ = 'brecht.wuyts@kuleuven.be'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 from DyLoPro.DynamicLogPlotting import DynamicLogPlots
