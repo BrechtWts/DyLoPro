@@ -89,29 +89,35 @@ class DynamicLogPlots():
 
         Notes
         -----
-        Formatting requirements specified columns in `event_log`: 
-        - `categorical_casefeatures` : Every column in `event_log` 
-        specified in this list has to be of one of the following dtypes: 
-        category, object, boolean. Furthermore, every event (row) 
-        pertaining to the same case (i.e. same case ID specified in the 
-        `case_id_key` column) should share the exact same value for each 
-        case feature. 
-        - `numerical_casefeatures` : Every column in `event_log` 
-        specified in this list has to be of a numerical dtype. 
-        Furthermore, every event (row) pertaining to the same case (i.e. 
-        same case ID specified in the `case_id_key` column) should share 
-        the exact same value for each case feature. 
-        - `categorical_eventfeatures` : Every column in `event_log` 
-        specified in this list has to be of one of the following dtypes: 
-        category, object, boolean. 
-        - `numerical_eventfeatures` : Every column in `event_log` 
-        specified in this list has to be of a numerical dtype. 
-        - `outcome`: An outcome column in `event_log` should be of an 
-        integer dtype, only contain the values `1` (positive cases) and 
-        `0` (negative cases). We regard outcome as case outcomes, and 
-        hence every event (row) pertaining to the same case (i.e. 
-        same case ID specified in the `case_id_key` column) should share 
-        the exact same value for the outcome. 
+        Formatting requirements specified columns in `event_log`:
+
+        * `categorical_casefeatures` : Every column in `event_log` 
+          specified in this list has to be of one of the following dtypes: 
+          category, object, boolean. Furthermore, every event (row) 
+          pertaining to the same case (i.e. same case ID specified in the 
+          `case_id_key` column) should share the exact same value for each 
+          case feature.
+
+        * `numerical_casefeatures` : Every column in `event_log` 
+          specified in this list has to be of a numerical dtype. 
+          Furthermore, every event (row) pertaining to the same case (i.e. 
+          same case ID specified in the `case_id_key` column) should share 
+          the exact same value for each case feature.
+
+        * `categorical_eventfeatures` : Every column in `event_log` 
+          specified in this list has to be of one of the following dtypes: 
+          category, object, boolean.
+
+        * `numerical_eventfeatures` : Every column in `event_log` 
+          specified in this list has to be of a numerical dtype.
+
+        * `outcome`: An outcome column in `event_log` should be of an 
+          integer dtype, only contain the values `1` (positive cases) and 
+          `0` (negative cases). We regard outcome as case outcomes, and 
+          hence every event (row) pertaining to the same case (i.e. 
+          same case ID specified in the `case_id_key` column) should share 
+          the exact same value for the outcome.
+
         """
         log = event_log.copy()
         valm._verify_initial(log, case_id_key, activity_key, timestamp_key, categorical_casefeatures, 
@@ -147,20 +153,20 @@ class DynamicLogPlots():
     # Plotting methods
         
     def topK_dfr_evol(self, time_unit = 'days', frequency = 'weekly', case_assignment = 'first_event', plt_type = 'univariate', numeric_agg = 'mean', max_k = 10, xtr_outlier_rem = True):
-        """Plot the time series of the requested aggregations for each of the 'max_k' 
+        """Plot the time series of the requested aggregations for each of the ``max_k`` 
         most frequently occurring Directly-Follows Relations (DFRs).
 
         All cases are grouped into time intervals of which the length is determined by the 
-        `frequency` argument. The condition that determines the time interval to which a 
-        certain case is assigned, is determined by the `case_assignment` argument. Can be 
+        ``frequency`` argument. The condition that determines the time interval to which a 
+        certain case is assigned, is determined by the ``case_assignment`` argument. Can be 
         holistically combined with different performance measures by specifying the 
-        `plt_type` argument. The requested DFR evolutions plotted are arranged in 
+        ``plt_type`` argument. The requested DFR evolutions plotted are arranged in 
         descending order of the number of occurrences of the DFRs.
 
         For readability, the DFRs are encoded with a number with DFR 1 being the most 
-        frequently occurring DFR, and DFR '`max_k`' being the max_k'th most occurring 
+        frequently occurring DFR, and DFR ``max_k`` being the max_k'th most occurring 
         DFR. To retrieve a dataframe that maps these DFR numbers to the actual 
-        activity pairs, the `get_DFR_df()` method of the `DynamicLogPlots` class can 
+        activity pairs, the ``get_DFR_df()`` method of the ``DynamicLogPlots`` class can 
         be called upon. 
 
         Parameters
@@ -191,33 +197,42 @@ class DynamicLogPlots():
 
         Notes
         -----
-        - ``case_assignment`` can take on the following three values:
-            - `'first_event'`: Each case is assigned to the time interval in which 
+        * ``case_assignment`` can take on the following three values:
+
+          * `'first_event'`: Each case is assigned to the time interval in which 
             its first event occurs. 
-            - `'last_event'`: Each case is assigned to the time interval in which 
+
+          * `'last_event'`: Each case is assigned to the time interval in which 
             its last event occurs
-            - `'max_events'`: Out of all the time intervals in which the events of a 
+
+          * `'max_events'`: Out of all the time intervals in which the events of a 
             particular case occur, the case is assigned to the interval in which most 
             of its events occur. Ties among time intervals are broken by assigning the 
             case to the first time interval. 
-        - `plt_type` can take one of the following five values:
-            - `'univariate'`: For each DFR, the evolutions of the periodically aggregated 
+
+        * ``plt_type`` can take one of the following five values:
+
+          * `'univariate'`: For each DFR, the evolutions of the periodically aggregated 
             amount of occurrences per case, as well as the fraction of cases containing
             at least one occurance of of that DFR, are plotted. 
-            - `'type_tt'`: For each DFR, next to the univariate plots, also the evolutions of 
+
+          * `'type_tt'`: For each DFR, next to the univariate plots, also the evolutions of 
             the periodically aggregated Throughput Time (TT) for cases with vs. cases 
             without that DFR are plotted. 
-            - `'type_events_case'`: For each DFR, next to the univariate plots, also the evolutions of 
+
+          * `'type_events_case'`: For each DFR, next to the univariate plots, also the evolutions of 
             the periodically aggregated case length (in number of events per case (NEPC)) for cases 
             with vs. cases without that DFR are plotted. 
-            - `'type_outcome'`: For each DFR, next to the univariate plots, also the evolutions of 
+
+          * `'type_outcome'`: For each DFR, next to the univariate plots, also the evolutions of 
             the periodic fractions of cases with a positive outcome ('outcome=1') for cases with
             vs. cases without that DFR, are plotted. (Only applicable if an outcome is already 
             specified upon initialization of the `DynamicLogPlots` instance, or with the 
-            `set_outcomeColumn(outcome)` method.)
-            - `'type_dfr_performance'`: For each DFR, next to the univariate plots, also the 
+            ``set_outcomeColumn(outcome)`` method.)
+
+          * `'type_dfr_performance'`: For each DFR, next to the univariate plots, also the 
             evolution of the periodically aggregated DFR performance is plotted. The DFR 
-            performance refers to the time elapsed between the first and last activity of
+            performance refers to the time elapsed between the first and last activity of 
             that DFR. The time unit in which these periodic performance aggregations are 
             expressed, is automatically determined based on their magnitude. __NOTE__ that 
             the `'type_dfr_performance'` representation type is a special case, as it is 
@@ -225,37 +240,44 @@ class DynamicLogPlots():
             for a certain DFR. I.e. cases that contain more than one occurrence of a 
             certain DFR will also deliver more than one value for the DFR performance to 
             be aggregated over. 
-        - ``numeric_agg`` can take on the following five values:
-            - `'mean'` : The requested time series are computed by taking the mean for each 
+
+        * ``numeric_agg`` can take on the following five values:
+
+          * `'mean'` : The requested time series are computed by taking the mean for each 
             time interval. E.g. for `plt_type='univariate'`, for each time interval, 
             and for each of the `max_k` DFRs, the mean amount of occurrences per case 
             is computed. The fraction of cases containing at least one occurrence of a 
             certain DFR is simply computed by, for each time interval, computing the 
             amount of cases with at least one occurrence, and dividing it by the total 
             amount of cases assigned to that time interval. 
-            - `'median'` : The requested time series are computed by taking the median for  
+
+          * `'median'` : The requested time series are computed by taking the median for  
             each time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each of the `max_k` DFRs, the median amount of occurrences per case, 
             the median TT for cases with at least one occurrence of that DFR, and the 
             median TT for all other cases (without an occurrence of that DFR) are 
             computed. 
-            - `'min'` : The requested time series are computed by taking the minimum for 
+
+          * `'min'` : The requested time series are computed by taking the minimum for 
             each time interval. E.g. for `plt_type='type_events_case'`, for each time interval, 
             and for each of the `max_k` DFRs, the minimum amount of occurrences per case, 
             the minimum NEPC for cases with at least one occurrence of that DFR, and the 
             minimum NEPC for all other cases (without an occurrence of that DFR) are 
             computed. 
-            - `'max'` : The requested time series are computed by taking the maximum for 
+
+          * `'max'` : The requested time series are computed by taking the maximum for 
             each time interval. E.g. for `plt_type='type_dfr_performance'`, for each 
             time interval, and for each of the `max_k` DFRs, the maximum amount of 
             occurrences per case and the maximum DFR performance (i.e. the maximum 
             time elapsed between the occurrence of the first and second activity of 
             that DFR) are computed. 
-            - `'std'` : The requested time series are computed by taking the standard 
+
+          * `'std'` : The requested time series are computed by taking the standard 
             deviation for each time interval. E.g. for `plt_type='type_dfr_performance'`, 
             for each time interval, and for each of the `max_k` DFRs, the standard deviation 
             of amount of occurrences per case as and the standard deviation of the DFR 
             performances are computed. 
+
         """
         valm._verify_topKdfr(outcome = self.outcome, time_unit = time_unit, frequency= frequency, 
                             case_assignment= case_assignment, plt_type= plt_type, numeric_agg= numeric_agg,
@@ -266,20 +288,20 @@ class DynamicLogPlots():
     
     def dfr_evol(self, directly_follows_relations, time_unit='days', frequency='weekly', case_assignment = 'first_event', plt_type= 'univariate', numeric_agg= 'mean', xtr_outlier_rem=True):
         """Plot the time series of the requested aggregations for the 
-        Directly-Follows Relations (DFRs) specified in the 'directly_follows_relations' list.
+        Directly-Follows Relations (DFRs) specified in the ``directly_follows_relations`` list.
 
         All cases are grouped into time intervals of which the length is determined by the 
-        `frequency` argument. The condition that determines the time interval to which a 
-        certain case is assigned, is determined by the `case_assignment` argument. Can be 
+        ``frequency`` argument. The condition that determines the time interval to which a 
+        certain case is assigned, is determined by the ``case_assignment`` argument. Can be 
         holistically combined with different performance measures by specifying the 
-        `plt_type` argument. The requested DFR evolutions plotted are arranged in 
+        ``plt_type`` argument. The requested DFR evolutions plotted are arranged in 
         descending order of the number of occurrences of the DFRs.
 
-        For readability, the DFRs in `directly_follows_relations` are encoded with a 
+        For readability, the DFRs in ``directly_follows_relations`` are encoded with a 
         number, with DFR 1 being the most frequently occurring DFR, DFR 2 being 
         the second most occurring DFR, and so on. To retrieve a dataframe that maps these 
-        DFR numbers to the actual activity pairs, the `get_DFR_df()` method of the 
-        `DynamicLogPlots` class can be called upon. 
+        DFR numbers to the actual activity pairs, the ``get_DFR_df()`` method of the 
+        ``DynamicLogPlots`` class can be called upon. 
 
         Parameters
         ----------
@@ -311,31 +333,40 @@ class DynamicLogPlots():
 
         Notes
         -----
-        - ``case_assignment`` can take on the following three values:
-            - `'first_event'`: Each case is assigned to the time interval in which 
-            its first event occurs. 
-            - `'last_event'`: Each case is assigned to the time interval in which 
-            its last event occurs
-            - `'max_events'`: Out of all the time intervals in which the events of a 
+        * ``case_assignment`` can take on the following three values:
+
+          * `'first_event'`: Each case is assigned to the time interval in which 
+            its first event occurs.
+
+          * `'last_event'`: Each case is assigned to the time interval in which 
+            its last event occurs.
+
+          * `'max_events'`: Out of all the time intervals in which the events of a 
             particular case occur, the case is assigned to the interval in which most 
             of its events occur. Ties among time intervals are broken by assigning the 
-            case to the first time interval. 
-        - `plt_type` can take one of the following five values:
-            - `'univariate'`: For each DFR, the evolutions of the periodically aggregated 
+            case to the first time interval.
+
+        * ``plt_type`` can take one of the following five values:
+
+          * `'univariate'`: For each DFR, the evolutions of the periodically aggregated 
             amount of occurrences per case, as well as the fraction of cases containing
-            at least one occurance of of that DFR, are plotted. 
-            - `'type_tt'`: For each DFR, next to the univariate plots, also the evolutions of 
+            at least one occurance of of that DFR, are plotted.
+
+          * `'type_tt'`: For each DFR, next to the univariate plots, also the evolutions of 
             the periodically aggregated Throughput Time (TT) for cases with vs. cases 
-            without that DFR are plotted. 
-            - `'type_events_case'`: For each DFR, next to the univariate plots, also the evolutions of 
+            without that DFR are plotted.
+
+          * `'type_events_case'`: For each DFR, next to the univariate plots, also the evolutions of 
             the periodically aggregated case length (in number of events per case (NEPC)) for cases 
-            with vs. cases without that DFR are plotted. 
-            - `'type_outcome'`: For each DFR, next to the univariate plots, also the evolutions of 
+            with vs. cases without that DFR are plotted.
+
+          * `'type_outcome'`: For each DFR, next to the univariate plots, also the evolutions of 
             the periodic fractions of cases with a positive outcome ('outcome=1') for cases with
             vs. cases without that DFR, are plotted. (Only applicable if an outcome is already 
             specified upon initialization of the `DynamicLogPlots` instance, or with the 
-            `set_outcomeColumn(outcome)` method.)
-            - `'type_dfr_performance'`: For each DFR, next to the univariate plots, also the 
+            ``set_outcomeColumn(outcome)`` method.)
+
+          * `'type_dfr_performance'`: For each DFR, next to the univariate plots, also the 
             evolution of the periodically aggregated DFR performance is plotted. The DFR 
             performance refers to the time elapsed between the first and last activity of
             that DFR. The time unit in which these periodic performance aggregations are 
@@ -344,39 +375,46 @@ class DynamicLogPlots():
             the only representation type in which cases can deliver more than one measure 
             for a certain DFR. I.e. cases that contain more than one occurrence of a 
             certain DFR will also deliver more than one value for the DFR performance to 
-            be aggregated over. 
-        - ``numeric_agg`` can take on the following five values:
-            - `'mean'` : The requested time series are computed by taking the mean for each 
+            be aggregated over.
+        
+        * ``numeric_agg`` can take on the following five values:
+
+          * `'mean'` : The requested time series are computed by taking the mean for each 
             time interval. E.g. for `plt_type='univariate'`, for each time interval, 
             and for each of the DFRs specified in `directly_follows_relations`, the 
             mean amount of occurrences per case is computed. The fraction of cases 
             containing at least one occurrence of a certain DFR is simply computed by, 
             for each time interval, computing the amount of cases with at least one 
             occurrence, and dividing it by the total amount of cases assigned to 
-            that time interval. 
-            - `'median'` : The requested time series are computed by taking the median for  
+            that time interval.
+
+          * `'median'` : The requested time series are computed by taking the median for  
             each time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each of the DFRs specified in `directly_follows_relations`, the median 
             amount of occurrences per case, the median TT for cases with at least one 
             occurrence of that DFR, and the median TT for all other cases 
-            (without an occurrence of that DFR) are computed. 
-            - `'min'` : The requested time series are computed by taking the minimum for 
+            (without an occurrence of that DFR) are computed.
+
+          * `'min'` : The requested time series are computed by taking the minimum for 
             each time interval. E.g. for `plt_type='type_events_case'`, for each time interval, 
             and for each of the DFRs specified in `directly_follows_relations`, the 
             minimum amount of occurrences per case, the minimum NEPC for cases with 
             at least one occurrence of that DFR, and the minimum NEPC for all other 
-            cases (without an occurrence of that DFR) are computed. 
-            - `'max'` : The requested time series are computed by taking the maximum for 
+            cases (without an occurrence of that DFR) are computed.
+
+          * `'max'` : The requested time series are computed by taking the maximum for 
             each time interval. E.g. for `plt_type='type_dfr_performance'`, for each 
             time interval, and for each of the DFRs specified in `directly_follows_relations`, 
             the maximum amount of occurrences per case and the maximum DFR performance 
             (i.e. the maximum time elapsed between the occurrence of the first and second 
-            activity of that DFR) are computed. 
-            - `'std'` : The requested time series are computed by taking the standard 
+            activity of that DFR) are computed.
+
+          * `'std'` : The requested time series are computed by taking the standard 
             deviation for each time interval. E.g. for `plt_type='type_dfr_performance'`, 
             for each time interval, and for each of the DFRs specified in `directly_follows_relations`, 
             the standard deviation of amount of occurrences per case as and the standard 
-            deviation of the DFR performances are computed. 
+            deviation of the DFR performances are computed.
+
         """
 
         valm._verify_dfr(dfrelations = self.dfrelations, directly_follows_relations = directly_follows_relations, outcome = self.outcome, 
@@ -388,20 +426,20 @@ class DynamicLogPlots():
 
 
     def topK_variants_evol(self, time_unit='days', frequency='weekly', case_assignment = 'first_event', plt_type= 'univariate', numeric_agg= 'mean', max_k= 10, xtr_outlier_rem = True):
-        """Plot the time series of the requested aggregations for each of the 'max_k' 
+        """Plot the time series of the requested aggregations for each of the ``max_k`` 
         most frequently occurring variants.
 
         All cases are grouped into time intervals of which the length is determined by the 
-        `frequency` argument. The condition that determines the time interval to which a 
-        certain case is assigned, is determined by the `case_assignment` argument. Can be 
+        ``frequency`` argument. The condition that determines the time interval to which a 
+        certain case is assigned, is determined by the ``case_assignment`` argument. Can be 
         holistically combined with different performance measures by specifying the 
-        `plt_type` argument. The requested variant time series plotted are arranged in 
+        ``plt_type`` argument. The requested variant time series plotted are arranged in 
         descending order of the number of occurrences of the variants.
 
         For readability, the variants are encoded with a number, with variant 1 being the most 
-        frequently occurring variant, and variant '`max_k`' being the max_k'th most occurring 
+        frequently occurring variant, and variant ``max_k`` being the max_k'th most occurring 
         variant. To retrieve a dataframe that maps these variant numbers to the actual 
-        activity sequences, the `get_var_df()` method of the `DynamicLogPlots` class can 
+        activity sequences, the ``get_var_df()`` method of the ``DynamicLogPlots`` class can 
         be called upon. 
 
         Parameters
@@ -426,58 +464,72 @@ class DynamicLogPlots():
         max_k : int, optional
             Only the max_k most frequently occurring variants are considered, by default 10. 
         xtr_outlier_rem : bool, optional
-            If True, the vertical ranges of the plots are only determined by regular  
+            If True, the vertical ranges of the plots are only determined by regular 
             values, i.e. extreme outliers (>q3 + 3*iqr) in the time series are neglected 
             when determining the vertical range, by default `True`.
 
         Notes
         -----
-        - ``case_assignment`` can take on the following three values:
-            - `'first_event'`: Each case is assigned to the time interval in which 
-            its first event occurs. 
-            - `'last_event'`: Each case is assigned to the time interval in which 
-            its last event occurs
-            - `'max_events'`: Out of all the time intervals in which the events of a 
+
+        * ``case_assignment`` can take on the following three values:
+
+          * `'first_event'`: Each case is assigned to the time interval in which 
+            its first event occurs.
+
+          * `'last_event'`: Each case is assigned to the time interval in which 
+            its last event occurs. 
+          * `'max_events'`: Out of all the time intervals in which the events of a 
             particular case occur, the case is assigned to the interval in which most 
             of its events occur. Ties among time intervals are broken by assigning the 
-            case to the first time interval. 
-        - `plt_type` can take one of the following three values:
-            - `'univariate'`: For each variant, plots the evolution of the periodic fraction
-            of cases for accounted for by that variant. 
-            - `'type_tt'`: For each variant, next to the univariate plots, also the evolutions of 
+            case to the first time interval.
+
+        * ``plt_type`` can take one of the following three values:
+
+          * `'univariate'`: For each variant, plots the evolution of the periodic fraction
+            of cases for accounted for by that variant.
+
+          * `'type_tt'`: For each variant, next to the univariate plots, also the evolutions of 
             the periodically aggregated Throughput Time (TT) for cases belonging to that variant vs. 
-            all other cases (not belonging to that variant), are plotted. 
-            - `'type_outcome'`: For each variant, next to the univariate plots, also the evolutions 
+            all other cases (not belonging to that variant), are plotted.
+
+          * `'type_outcome'`: For each variant, next to the univariate plots, also the evolutions 
             of the periodic fractions of cases with a positive outcome ('outcome=1') for cases 
             belonging to that variant vs. all other cases (not belonging to that variant),
             are plotted. (Only applicable if an outcome is already specified upon initialization 
-            of the `DynamicLogPlots` instance, or with the `set_outcomeColumn(outcome)` method.)
-        - ``numeric_agg`` can take on the following five values:
-            - `'mean'` : The requested time series are computed by taking the mean for each 
+            of the `DynamicLogPlots` instance, or with the ``set_outcomeColumn(outcome)`` method.)
+
+        * ``numeric_agg`` can take on the following five values:
+
+          * `'mean'` : The requested time series are computed by taking the mean for each 
             time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each of the `max_k` variants, the mean TT for cases belonging to 
             that variant, and the mean TT for all other cases (belonging to other 
-            variants) are computed. 
-            - `'median'` : The requested time series are computed by taking the median for  
+            variants) are computed.
+
+          * `'median'` : The requested time series are computed by taking the median for  
             each time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each of the `max_k` variants, the median TT for cases belonging to 
             that variant, and the median TT for all other cases (belonging to other 
-            variants) are computed. 
-            - `'min'` : The requested time series are computed by taking the minimum for 
+            variants) are computed.
+
+          * `'min'` : The requested time series are computed by taking the minimum for 
             each time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each of the `max_k` variants, the minimum TT among cases belonging 
             to that variant, and the minimum TT among all other cases (belonging to other 
-            variants) are computed. 
-            - `'max'` : The requested time series are computed by taking the maximum for 
+            variants) are computed.
+
+          * `'max'` : The requested time series are computed by taking the maximum for 
             each time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each of the `max_k` variants, the maximum TT among cases belonging 
             to that variant, and the maximum TT among all other cases (belonging to other 
-            variants) are computed. 
-            - `'std'` : The requested time series are computed by taking the standard 
+            variants) are computed.
+
+          * `'std'` : The requested time series are computed by taking the standard 
             deviation for each time interval. E.g. for `plt_type='type_tt'`, 
             for each time interval, and for each of the `max_k` variants, the standard  
             deviation of the TT for cases belonging to that variant, and the standard 
-            deviation of the TT for all other cases (belonging to other variants) are computed. 
+            deviation of the TT for all other cases (belonging to other variants) are computed.
+
         """
         valm._verify_topKvariants(outcome = self.outcome, time_unit = time_unit, frequency = frequency, 
                                     case_assignment = case_assignment, plt_type = plt_type, numeric_agg = numeric_agg,
@@ -488,19 +540,19 @@ class DynamicLogPlots():
 
     def variants_evol(self, variants, time_unit='days', frequency='weekly', case_assignment = 'first_event', plt_type= 'univariate', numeric_agg= 'mean', xtr_outlier_rem = True):
         """Plot the time series of the requested aggregations for the 
-        variants specified in the 'variants' list.
+        variants specified in the ``variants`` list.
 
         All cases are grouped into time intervals of which the length is determined by the 
-        `frequency` argument. The condition that determines the time interval to which a 
-        certain case is assigned, is determined by the `case_assignment` argument. Can be 
+        ``frequency`` argument. The condition that determines the time interval to which a 
+        certain case is assigned, is determined by the ``case_assignment`` argument. Can be 
         holistically combined with different performance measures by specifying the 
-        `plt_type` argument. The requested variant time series plotted are arranged in 
+        ``plt_type`` argument. The requested variant time series plotted are arranged in 
         descending order of the number of occurrences of the variants.
 
         For readability, the variants are encoded with a number, with variant 1 being the most 
         frequently occurring variant, variant 2 being the second most occurring 
         variant, and so on. To retrieve a dataframe that maps these variant numbers to the actual 
-        activity sequences, the `get_var_df()` method of the `DynamicLogPlots` class can 
+        activity sequences, the ``get_var_df()`` method of the ``DynamicLogPlots`` class can 
         be called upon. 
 
         Parameters
@@ -533,52 +585,66 @@ class DynamicLogPlots():
 
         Notes
         -----
-        - ``case_assignment`` can take on the following three values:
-            - `'first_event'`: Each case is assigned to the time interval in which 
-            its first event occurs. 
-            - `'last_event'`: Each case is assigned to the time interval in which 
-            its last event occurs
-            - `'max_events'`: Out of all the time intervals in which the events of a 
+        * ``case_assignment`` can take on the following three values:
+
+          * `'first_event'`: Each case is assigned to the time interval in which 
+            its first event occurs.
+
+          * `'last_event'`: Each case is assigned to the time interval in which 
+            its last event occurs.
+
+          * `'max_events'`: Out of all the time intervals in which the events of a 
             particular case occur, the case is assigned to the interval in which most 
             of its events occur. Ties among time intervals are broken by assigning the 
-            case to the first time interval. 
-        - `plt_type` can take one of the following three values:
-            - `'univariate'`: For each variant, plots the evolution of the periodic fraction
-            of cases accounted for by that variant. 
-            - `'type_tt'`: For each variant, next to the univariate plots, also the evolutions of 
+            case to the first time interval.
+
+        * ``plt_type`` can take one of the following three values:
+
+          * `'univariate'`: For each variant, plots the evolution of the periodic fraction
+            of cases accounted for by that variant.
+
+          * `'type_tt'`: For each variant, next to the univariate plots, also the evolutions of 
             the periodically aggregated Throughput Time (TT) for cases belonging to that variant vs. 
-            all other cases (not belonging to that variant), are plotted. 
-            - `'type_outcome'`: For each variant, next to the univariate plots, also the evolutions 
+            all other cases (not belonging to that variant), are plotted.
+
+          * `'type_outcome'`: For each variant, next to the univariate plots, also the evolutions 
             of the periodic fractions of cases with a positive outcome ('outcome=1') for cases 
             belonging to that variant vs. all other cases (not belonging to that variant),
             are plotted. (Only applicable if an outcome is already specified upon initialization 
-            of the `DynamicLogPlots` instance, or with the `set_outcomeColumn(outcome)` method.)
-        - ``numeric_agg`` can take on the following five values:
-            - `'mean'` : The requested time series are computed by taking the mean for each 
+            of the `DynamicLogPlots` instance, or with the ``set_outcomeColumn(outcome)`` method.)
+
+        * ``numeric_agg`` can take on the following five values:
+
+          * `'mean'` : The requested time series are computed by taking the mean for each 
             time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each variant specified in `variants`, the mean TT for cases belonging to 
             that variant, and the mean TT for all other cases (belonging to other 
-            variants) are computed. 
-            - `'median'` : The requested time series are computed by taking the median for  
+            variants) are computed.
+
+          * `'median'` : The requested time series are computed by taking the median for  
             each time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each variant specified in `variants`, the median TT for cases belonging to 
             that variant, and the median TT for all other cases (belonging to other 
-            variants) are computed. 
-            - `'min'` : The requested time series are computed by taking the minimum for 
+            variants) are computed.
+
+          * `'min'` : The requested time series are computed by taking the minimum for 
             each time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each variant specified in `variants`, the minimum TT among cases belonging 
             to that variant, and the minimum TT among all other cases (belonging to other 
-            variants) are computed. 
-            - `'max'` : The requested time series are computed by taking the maximum for 
+            variants) are computed.
+
+          * `'max'` : The requested time series are computed by taking the maximum for 
             each time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each variant specified in `variants`, the maximum TT among cases belonging 
             to that variant, and the maximum TT among all other cases (belonging to other 
-            variants) are computed. 
-            - `'std'` : The requested time series are computed by taking the standard 
+            variants) are computed.
+
+          * `'std'` : The requested time series are computed by taking the standard 
             deviation for each time interval. E.g. for `plt_type='type_tt'`, 
             for each time interval, and for each variant specified in `variants`, the standard  
             deviation of the TT for cases belonging to that variant, and the standard 
-            deviation of the TT for all other cases (belonging to other variants) are computed. 
+            deviation of the TT for all other cases (belonging to other variants) are computed.
+
         """
         valm._verify_variants(all_vars = self.all_vars, variants = variants, outcome = self.outcome, time_unit = time_unit, 
                                 frequency = frequency, case_assignment = case_assignment, plt_type = plt_type, 
@@ -589,16 +655,16 @@ class DynamicLogPlots():
                             numeric_agg= numeric_agg, xtr_outlier_rem = xtr_outlier_rem)
 
     def topK_categorical_caseftr_evol(self, case_feature, time_unit = 'days', frequency = 'weekly', case_assignment = 'first_event', plt_type = 'univariate', numeric_agg = 'mean', max_k = 10, xtr_outlier_rem = True):
-        """Plot the time series of the requested aggregations for each of the 'max_k' 
+        """Plot the time series of the requested aggregations for each of the ``max_k`` 
         most frequently occurring levels of categorical case feature 'case_feature'.
-        If 'max_k' is greater than or equal to the cardinality of that feature, the 
+        If ``max_k`` is greater than or equal to the cardinality of that feature, the 
         requested time series for all levels are plotted. 
 
         All cases are grouped into time intervals of which the length is determined by the 
-        `frequency` argument. The condition that determines the time interval to which a 
-        certain case is assigned, is determined by the `case_assignment` argument. Can be 
+        ``frequency`` argument. The condition that determines the time interval to which a 
+        certain case is assigned, is determined by the ``case_assignment`` argument. Can be 
         holistically combined with different performance measures by specifying the 
-        `plt_type` argument. The requested level time series plotted are arranged in 
+        ``plt_type`` argument. The requested level time series plotted are arranged in 
         descending order of the number of occurrences of the levels. 
 
         Parameters
@@ -628,61 +694,77 @@ class DynamicLogPlots():
             Only the max_k most frequently occurring levels of 'case_feature' are considered, 
             by default 10.
         xtr_outlier_rem : bool, optional
-            If True, the vertical ranges of the plots are only determined by regular  
+            If True, the vertical ranges of the plots are only determined by regular 
             values, i.e. extreme outliers (>q3 + 3*iqr) in the time series are neglected 
             when determining the vertical range, by default `True`.
 
         Notes
         -----
-        - ``case_assignment`` can take on the following three values:
-            - `'first_event'`: Each case is assigned to the time interval in which 
-            its first event occurs. 
-            - `'last_event'`: Each case is assigned to the time interval in which 
-            its last event occurs
-            - `'max_events'`: Out of all the time intervals in which the events of a 
+
+        * ``case_assignment`` can take on the following three values:
+
+          * `'first_event'`: Each case is assigned to the time interval in which 
+            its first event occurs.
+
+          * `'last_event'`: Each case is assigned to the time interval in which 
+            its last event occurs.
+
+          * `'max_events'`: Out of all the time intervals in which the events of a 
             particular case occur, the case is assigned to the interval in which most 
             of its events occur. Ties among time intervals are broken by assigning the 
-            case to the first time interval. 
-        - `plt_type` can take one of the following four values:
-            - `'univariate'`: For each level, plots the evolution of the periodic fraction
-            of cases for which `case_feature='level'`. 
-            - `'type_tt'`: For each level, next to the univariate plots, also the evolutions of 
+            case to the first time interval.
+
+        * ``plt_type`` can take one of the following four values:
+
+          * `'univariate'`: For each level, plots the evolution of the periodic fraction
+            of cases for which `case_feature='level'`.
+
+          * `'type_tt'`: For each level, next to the univariate plots, also the evolutions of 
             the periodically aggregated Throughput Time (TT) for cases with `case_feature='level'` vs. 
-            all other cases (`case_feature!='level'`), are plotted. 
-            - `'type_events_case'`: For each level, next to the univariate plots, also the evolutions of 
+            all other cases (`case_feature!='level'`), are plotted.
+
+          * `'type_events_case'`: For each level, next to the univariate plots, also the evolutions of 
             the periodically aggregated case length (in Number of Events Per Case (NEPC)) for cases 
-            with `case_feature='level'` vs. all other cases (`case_feature!='level'`), are plotted. 
-            - `'type_outcome'`: For each level, next to the univariate plots, also the evolutions 
+            with `case_feature='level'` vs. all other cases (`case_feature!='level'`), are plotted.
+
+          * `'type_outcome'`: For each level, next to the univariate plots, also the evolutions 
             of the periodic fractions of cases with a positive outcome ('outcome=1') for cases 
             with `case_feature='level'` vs. all other cases (`case_feature!='level'`), are plotted. 
             (Only applicable if an outcome is already specified upon initialization 
-            of the `DynamicLogPlots` instance, or with the `set_outcomeColumn(outcome)` method.)
-        - ``numeric_agg`` can take on the following five values:
-            - `'mean'` : The requested time series are computed by taking the mean for each 
+            of the `DynamicLogPlots` instance, or with the ``set_outcomeColumn(outcome)`` method.)
+
+        * ``numeric_agg`` can take on the following five values:
+
+          * `'mean'` : The requested time series are computed by taking the mean for each 
             time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each of the `max_k` levels of `case_feature`, the mean TT for cases with 
             `case_feature='level'`, and the mean TT for all other cases (with 
-            `case_feature!='level'`) are computed. 
-            - `'median'` : The requested time series are computed by taking the median for  
+            `case_feature!='level'`) are computed.
+
+          * `'median'` : The requested time series are computed by taking the median for  
             each time interval. E.g. for `plt_type='type_events_case'`, for each time interval, 
             and for each of the `max_k` levels of `case_feature`, the median NEPC for cases with 
             `case_feature='level'`, and the median NEPC for all other cases (with 
-            `case_feature!='level'`) are computed. 
-            - `'min'` : The requested time series are computed by taking the minimum for 
+            `case_feature!='level'`) are computed.
+
+          * `'min'` : The requested time series are computed by taking the minimum for 
             each time interval. E.g. for `plt_type='type_events_case'`, for each time interval, 
             and for each of the `max_k` levels of `case_feature`, the minimum NEPC among cases with 
             `case_feature='level'`, and the minimum NEPC among all other cases (with 
-            `case_feature!='level'`) are computed. 
-            - `'max'` : The requested time series are computed by taking the maximum for 
+            `case_feature!='level'`) are computed.
+
+          * `'max'` : The requested time series are computed by taking the maximum for 
             each time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each of the `max_k` levels of `case_feature`, the maximum TT among cases 
             with `case_feature='level'`, and the maximum TT among all other cases (with 
-            `case_feature!='level'`) are computed. 
-            - `'std'` : The requested time series are computed by taking the standard 
+            `case_feature!='level'`) are computed.
+
+          * `'std'` : The requested time series are computed by taking the standard 
             deviation for each time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each of the `max_k` levels of `case_feature`, the standard deviation of the 
             TT among cases with `case_feature='level'`, and the standard deviation of the TT of all 
-            other cases (with `case_feature!='level'`) are computed. 
+            other cases (with `case_feature!='level'`) are computed.
+
         """
 
         valm._verify_topKcatFt(feature = case_feature, ftr_type = 'case', feature_list = self.categorical_casefeatures, 
@@ -696,13 +778,13 @@ class DynamicLogPlots():
 
     def num_casefts_evol(self, numeric_case_list, time_unit='days', frequency='weekly', case_assignment = 'first_event', plt_type = 'univariate', numeric_agg= 'mean', xtr_outlier_rem = True):
         """ Plots the time series of the requested aggregations over time for the numerical 
-        event features specified in the 'numeric_case_list' argument.
+        event features specified in the ``numeric_case_list`` argument.
 
         All cases are grouped into time intervals of which the length is determined by the 
-        `frequency` argument. The condition that determines the time interval to which a 
-        certain case is assigned, is determined by the `case_assignment` argument. Can be 
+        ``frequency`` argument. The condition that determines the time interval to which a 
+        certain case is assigned, is determined by the ``case_assignment`` argument. Can be 
         holistically combined with different performance measures by specifying the 
-        `plt_type` argument.
+        ``plt_type`` argument.
 
         Parameters
         ----------
@@ -734,56 +816,72 @@ class DynamicLogPlots():
 
         Notes
         -----
-        - ``case_assignment`` can take on the following three values:
-            - `'first_event'`: Each case is assigned to the time interval in which 
-            its first event occurs. 
-            - `'last_event'`: Each case is assigned to the time interval in which 
-            its last event occurs
-            - `'max_events'`: Out of all the time intervals in which the events of a 
+
+        * ``case_assignment`` can take on the following three values:
+
+          * `'first_event'`: Each case is assigned to the time interval in which 
+            its first event occurs.
+
+          * `'last_event'`: Each case is assigned to the time interval in which 
+            its last event occurs.
+
+          * `'max_events'`: Out of all the time intervals in which the events of a 
             particular case occur, the case is assigned to the interval in which most 
             of its events occur. Ties among time intervals are broken by assigning the 
-            case to the first time interval. 
-        - `plt_type` can take one of the following four values:
-            - `'univariate'`: For each numerical case feature, plots the evolution of its 
-            periodical aggregations. 
-            - `'type_tt'`: For each numerical case feature, next to the univariate plots, also the
+            case to the first time interval.
+
+        * ``plt_type`` can take one of the following four values:
+
+          * `'univariate'`: For each numerical case feature, plots the evolution of its 
+            periodical aggregations.
+
+          * `'type_tt'`: For each numerical case feature, next to the univariate plots, also the
             evolution of the periodically aggregated ratio of Throughput Time (TT) needed per 
             unit of that feature is plotted. The time unit of these periodic ratio aggregations 
-            (time unit / unit of feature) is automatically determined based on their magnitude. 
-            - `'type_events_case'`: For each numerical case feature, next to the univariate plots, 
+            (time unit / unit of feature) is automatically determined based on their magnitude.
+
+          * `'type_events_case'`: For each numerical case feature, next to the univariate plots, 
             also the evolution of the periodically aggregated ratio of Number of Events Per Case 
             (NEPC) needed per 10^(x) units of that feature is plotted. The exponent 'x' is automatically 
-            determined based on their magnitude. 
-            - `'type_outcome'`: For each numerical case feature, next to the univariate plots, also 
+            determined based on their magnitude.
+
+          * `'type_outcome'`: For each numerical case feature, next to the univariate plots, also 
             the two evolutions of the feature's periodical aggregations for cases with a positive 
             outcome ('outcome=1') vs. cases with a negative outcome ('outcome=1') are plotted. 
             (Only applicable if an outcome is already specified upon initialization 
-            of the `DynamicLogPlots` instance, or with the `set_outcomeColumn(outcome)` method.)
-        - ``numeric_agg`` can take on the following five values:
-            - `'mean'` : The requested time series are computed by taking the mean for each 
+            of the `DynamicLogPlots` instance, or with the ``set_outcomeColumn(outcome)`` method.)
+
+        * ``numeric_agg`` can take on the following five values:
+
+          * `'mean'` : The requested time series are computed by taking the mean for each 
             time interval. E.g. for `plt_type='univariate'`, for each time interval, 
             and for each numeric case feature specified in `numeric_case_list`, the mean 
-            of all case feature values is is computed. 
-            - `'median'` : The requested time series are computed by taking the median for 
+            of all case feature values is is computed.
+
+          * `'median'` : The requested time series are computed by taking the median for 
             each time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each numeric case feature specified in `numeric_case_list`, the median 
-            of all case feature values as well as the median of all TT ratios are computed. 
-            - `'min'` : The requested time series are computed by taking the minimum for 
+            of all case feature values as well as the median of all TT ratios are computed.
+
+          * `'min'` : The requested time series are computed by taking the minimum for 
             each time interval. E.g. for `plt_type='type_events_case'`, for each time 
             interval, and for each numeric case feature specified in `numeric_case_list`, 
             both the minimum of all case feature values and the minimum of all NEPC ratios 
-            are computed. 
-            - `'max'` : The requested time series are computed by taking the maximum for 
+            are computed.
+
+          * `'max'` : The requested time series are computed by taking the maximum for 
             each time interval. E.g. for `plt_type='type_outcome'`, for each time 
             interval, and for each numeric case feature specified in `numeric_case_list`, 
             the maximum of all case feature values, the maximum of all case feature values 
             for cases with a positive outcome and the maximum of all values for cases 
             with a negative outcome are computed.
-            - `'std'` : The requested time series are computed by taking the standard 
+
+          * `'std'` : The requested time series are computed by taking the standard 
             deviation for each time interval. E.g. for `plt_type='type_tt'`, for each 
             time interval, and for each numeric case feature specified in `numeric_case_list`, 
             the standard deviation of all case feature values as well as the standard deviation 
-            of all TT ratios are computed. 
+            of all TT ratios are computed.
+
         """
 
         valm._verify_numFt(features = numeric_case_list, ftr_type = 'case', feature_list = self.numerical_casefeatures, 
@@ -795,16 +893,16 @@ class DynamicLogPlots():
 
 
     def topK_categorical_eventftr_evol(self, event_feature, time_unit = 'days', frequency = 'weekly', case_assignment = 'first_event', plt_type = 'univariate', numeric_agg = 'mean', max_k = 10, xtr_outlier_rem = True):
-        """Plot the time series of the requested aggregations for each of the 'max_k' 
-        most frequently occurring levels of categorical event feature 'event_feature'.
-        If 'max_k' is greater than or equal to the cardinality of that feature, the 
+        """Plot the time series of the requested aggregations for each of the ``max_k`` 
+        most frequently occurring levels of categorical event feature ``event_feature``.
+        If ``max_k`` is greater than or equal to the cardinality of that feature, the 
         requested time series for all levels are plotted. 
 
         All cases are grouped into time intervals of which the length is determined by the 
-        `frequency` argument. The condition that determines the time interval to which a 
-        certain case is assigned, is determined by the `case_assignment` argument. Can be 
+        ``frequency`` argument. The condition that determines the time interval to which a 
+        certain case is assigned, is determined by the ``case_assignment`` argument. Can be 
         holistically combined with different performance measures by specifying the 
-        `plt_type` argument. The requested level time series plotted are arranged in 
+        ``plt_type`` argument. The requested level time series plotted are arranged in 
         descending order of the number of occurrences of each level.
 
         Parameters
@@ -840,59 +938,74 @@ class DynamicLogPlots():
 
         Notes
         -----
-        - ``case_assignment`` can take on the following three values:
-            - `'first_event'`: Each case is assigned to the time interval in which 
-            its first event occurs. 
-            - `'last_event'`: Each case is assigned to the time interval in which 
-            its last event occurs
-            - `'max_events'`: Out of all the time intervals in which the events of a 
+
+        * ``case_assignment`` can take on the following three values:
+
+          * `'first_event'`: Each case is assigned to the time interval in which 
+            its first event occurs.
+
+          * `'last_event'`: Each case is assigned to the time interval in which 
+            its last event occurs.
+
+          * `'max_events'`: Out of all the time intervals in which the events of a 
             particular case occur, the case is assigned to the interval in which most 
             of its events occur. Ties among time intervals are broken by assigning the 
-            case to the first time interval. 
-        - `plt_type` can take one of the following four values:
-            - `'univariate'`: For each level, plots the evolution of the periodic fraction
-            of cases for which . 
-            - `'type_tt'`: For each level, next to the univariate plots, also the evolutions of 
+            case to the first time interval.
+
+        * ``plt_type`` can take one of the following four values:
+
+          * `'univariate'`: For each level, plots the evolution of the periodic fraction
+            of cases for which at least one event satisfies `event_feature='level'`. 
+          * `'type_tt'`: For each level, next to the univariate plots, also the evolutions of 
             the periodically aggregated Throughput Time (TT) for cases with at least one  
-            occurrence of  vs. all other cases (`event_feature!='level'` for all 
-            events), are plotted. 
-            - `'type_events_case'`: For each level, next to the univariate plots, also the evolutions of 
+            occurrence of `event_feature='level'` vs. all other cases (`event_feature!='level'` for all 
+            events), are plotted.
+
+          * `'type_events_case'`: For each level, next to the univariate plots, also the evolutions of 
             the periodically aggregated case length (in Number of Events Per Case (NEPC)) for cases 
-            with at least one occurrence of  vs. all other cases 
-            (`event_feature!='level'` for all events), are plotted. 
-            - `'type_outcome'`: For each level, next to the univariate plots, also the evolutions 
+            with at least one occurrence of `event_feature='level'` vs. all other cases 
+            (`event_feature!='level'` for all events), are plotted.
+
+          * `'type_outcome'`: For each level, next to the univariate plots, also the evolutions 
             of the periodic fractions of cases with a positive outcome ('outcome=1') for cases 
             with at least one occurrence of `event_feature='level'` vs. all other cases 
             (`event_feature!='level'` for all events), are plotted. (Only applicable if an outcome 
             is already specified upon initialization of the `DynamicLogPlots` instance, or with 
-            the `set_outcomeColumn(outcome)` method.)
-        - ``numeric_agg`` can take on the following five values:
-            - `'mean'` : The requested time series are computed by taking the mean for each 
+            the ``set_outcomeColumn(outcome)`` method.)
+
+        * ``numeric_agg`` can take on the following five values:
+
+          * `'mean'` : The requested time series are computed by taking the mean for each 
             time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each of the `max_k` levels of `event_feature`, the mean TT for cases with 
             at least one occurrence of `event_feature='level'`, and the mean TT for all other cases 
-            (with `event_feature!='level'` for all events) are computed. 
-            - `'median'` : The requested time series are computed by taking the median for  
+            (with `event_feature!='level'` for all events) are computed.
+
+          * `'median'` : The requested time series are computed by taking the median for  
             each time interval. E.g. for `plt_type='type_events_case'`, for each time interval, 
             and for each of the `max_k` levels of `event_feature`, the median NEPC for cases with 
             at least one occurrence of `event_feature='level'`, and the median NEPC for all other cases  
-            (with `event_feature!='level'` for all events) are computed. 
-            - `'min'` : The requested time series are computed by taking the minimum for 
+            (with `event_feature!='level'` for all events) are computed.
+
+          * `'min'` : The requested time series are computed by taking the minimum for 
             each time interval. E.g. for `plt_type='type_events_case'`, for each time interval, 
             and for each of the `max_k` levels of `event_feature`, the minimum NEPC among cases with 
             at least one occurrence of `event_feature='level'`, and the minimum NEPC among all other 
-            cases (with `event_feature!='level'` for all events) are computed. 
-            - `'max'` : The requested time series are computed by taking the maximum for 
+            cases (with `event_feature!='level'` for all events) are computed.
+
+          * `'max'` : The requested time series are computed by taking the maximum for 
             each time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each of the `max_k` levels of `event_feature`, the maximum TT among cases 
             with at least one occurrence of `event_feature='level'`, and the maximum TT among all 
-            other cases (with `event_feature!='level'` for all events) are computed. 
-            - `'std'` : The requested time series are computed by taking the standard 
+            other cases (with `event_feature!='level'` for all events) are computed.
+
+          * `'std'` : The requested time series are computed by taking the standard 
             deviation for each time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each of the `max_k` levels of `event_feature`, the standard deviation of the 
             TT among cases with at least one occurrence of `event_feature='level'`, and the standard 
             deviation of the TT of all other cases (with `event_feature!='level'` for all events) are 
-            computed. 
+            computed.
+
         """
         valm._verify_topKcatFt(feature = event_feature, ftr_type = 'event', feature_list = self.categorical_eventfeatures,
                                 outcome = self.outcome, time_unit = time_unit, frequency = frequency, case_assignment = case_assignment,
@@ -906,19 +1019,19 @@ class DynamicLogPlots():
     def num_eventfts_evol(self, numeric_event_list, time_unit = 'days', frequency = 'weekly', case_assignment = 'first_event', 
                           plt_type = 'univariate', numeric_agg = 'mean', xtr_outlier_rem = True, numEventFt_transform = 'last'):
         """Plot the evolution of the requested aggregations over time for the numerical 
-        event features specified in the numeric_event_list argument. 
+        event features specified in the ``numeric_event_list`` argument. 
 
         All cases are grouped into time intervals of which the length is determined by the 
-        `frequency` argument. The condition that determines the time interval to which a 
-        certain case is assigned, is determined by the `case_assignment` argument. Can be 
+        ``frequency`` argument. The condition that determines the time interval to which a 
+        certain case is assigned, is determined by the ``case_assignment`` argument. Can be 
         holistically combined with different performance measures by specifying the 
-        `plt_type` argument. 
+        ``plt_type`` argument. 
 
         In contrast to the numerical case features, numerical event features can take on 
         different values for one and the same case. Therefore, to visualize case-level 
         characteristics over time, an additional abstraction method is needed to project a 
         trace's sequence of numerical event feature values to a single numeric value. This
-        transformation can be specified by means of the `numEventFt_transform` parameter. 
+        transformation can be specified by means of the ``numEventFt_transform`` parameter. 
         
         Parameters
         ----------
@@ -956,72 +1069,97 @@ class DynamicLogPlots():
         
         Notes
         -----
-        - ``case_assignment`` can take on the following three values:
-            - `'first_event'`: Each case is assigned to the time interval in which 
-            its first event occurs. 
-            - `'last_event'`: Each case is assigned to the time interval in which 
-            its last event occurs
-            - `'max_events'`: Out of all the time intervals in which the events of a 
+
+        * ``case_assignment`` can take on the following three values:
+
+          * `'first_event'`: Each case is assigned to the time interval in which 
+            its first event occurs.
+
+          * `'last_event'`: Each case is assigned to the time interval in which 
+            its last event occurs.
+
+          * `'max_events'`: Out of all the time intervals in which the events of a 
             particular case occur, the case is assigned to the interval in which most 
             of its events occur. Ties among time intervals are broken by assigning the 
-            case to the first time interval. 
-        - ``plt_type`` can take one of the following four values:
-            - `'univariate'`: For each numerical event feature, plots the evolution of its 
-            periodical aggregations. 
-            - `'type_tt'`: For each numerical event feature, next to the univariate plots, also the
+            case to the first time interval.
+
+        * ``plt_type`` can take one of the following four values:
+
+          * `'univariate'`: For each numerical event feature, plots the evolution of its 
+            periodical aggregations.
+
+          * `'type_tt'`: For each numerical event feature, next to the univariate plots, also the
             evolution of the periodically aggregated ratio of Throughput Time (TT) needed per 
             unit of that feature is plotted. The time unit of these periodic ratio aggregations 
-            (time unit / unit of feature) is automatically determined based on their magnitude. 
-            - `'type_events_case'`: For each numerical event feature, next to the univariate plots, 
+            (time unit / unit of feature) is automatically determined based on their magnitude.
+
+          * `'type_events_case'`: For each numerical event feature, next to the univariate plots, 
             also the evolution of the periodically aggregated ratio of Number of Events Per Case 
             (NEPC) needed per 10^(x) units of that feature is plotted. The exponent 'x' is automatically 
-            determined based on their magnitude. 
-            - `'type_outcome'`: For each numerical event feature, next to the univariate plots, also 
+            determined based on their magnitude.
+
+          * `'type_outcome'`: For each numerical event feature, next to the univariate plots, also 
             the two evolutions of the feature's periodical aggregations for cases with a positive 
             outcome ('outcome=1') vs. cases with a negative outcome ('outcome=1') are plotted. 
             (Only applicable if an outcome is already specified upon initialization 
-            of the `DynamicLogPlots` instance, or with the `set_outcomeColumn(outcome)` method.)
-        - ``numeric_agg`` can take on the following five values:
-            - `'mean'` : The requested time series are computed by taking the mean for each 
+            of the `DynamicLogPlots` instance, or with the ``set_outcomeColumn(outcome)`` method.)
+
+        * ``numeric_agg`` can take on the following five values:
+
+          * `'mean'` : The requested time series are computed by taking the mean for each 
             time interval. E.g. for `plt_type='univariate'`, for each time interval, 
             and for each numeric event feature, the mean of all (transformed) values is 
-            is computed. 
-            - `'median'` : The requested time series are computed by taking the median for  
+            is computed.
+
+          * `'median'` : The requested time series are computed by taking the median for  
             each time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
             and for each numeric event feature, the median of all (transformed) event 
-            feature values as well as the median of all TT ratios are computed. 
-            - `'min'` : The requested time series are computed by taking the minimum for 
+            feature values as well as the median of all TT ratios are computed.
+
+          * `'min'` : The requested time series are computed by taking the minimum for 
             each time interval. E.g. for `plt_type='type_events_case'`, for each time  
             interval, and for each numeric event feature, both the minimum of all 
-            (transformed) values and the minimum of all NEPC ratios are computed. 
-            - `'max'` : The requested time series are computed by taking the maximum for 
+            (transformed) values and the minimum of all NEPC ratios are computed.
+
+          * `'max'` : The requested time series are computed by taking the maximum for 
             each time interval. E.g. for `plt_type='type_outcome'`, for each time  
             interval, and for each numeric event feature, both the maximum of all 
             (transformed) values, the maximum of all (transformed) values for cases 
             with a positive outcome and the maximum of all (transformed) values for 
-            cases with a negative outcome are computed. 
-            - `'std'` : The requested time series are computed by taking the standard 
-            deviation for each time interval. E.g. for `plt_type='type_tt'`, for each  
+            cases with a negative outcome are computed.
+
+          * `'std'` : The requested time series are computed by taking the standard 
+            deviation for each time interval. E.g. for `plt_type='type_tt'`, for each 
             time interval, and for each numeric event feature, the standard deviation 
             of all (transformed) event feature values as well as the standard deviation 
-            of all TT ratios are computed. 
-        - 'numEventFt_transform' determines, for each numerical event feature contained in 
-        `numeric_event_list`, how each trace's sequence of numerical event feature values 
-        are projected to a single numeric value. It can take on the following eight values: 
-            - `'last'` : Each case is assigned the last non-null entry a numerical event feature. 
-            - `'first'` : Each case is assigned the first non-null entry of a numerical event feature. 
-            - `'mean'` : Each case is assigned the mean value over all its non-null entries of a 
-            numerical event feature. 
-            - `'median'` : Each case is assigned the median value over all its non-null entries of a 
-            numerical event feature. 
-            - `'sum'` : Each case is assigned the sum over all its non-null entries of a 
-            numerical event feature. 
-            - `'prod'` : Each case is assigned the product over all its non-null entries of a 
-            numerical event feature. 
-            - `'min'` : Each case is assigned the minimum value over all its non-null entries of a 
-            numerical event feature. 
-            - `'max'` : Each case is assigned the maximum value over all its non-null entries of a 
-            numerical event feature. 
+            of all TT ratios are computed.
+
+        * 'numEventFt_transform' determines, for each numerical event feature contained in 
+          `numeric_event_list`, how each trace's sequence of numerical event feature values 
+          are projected to a single numeric value. It can take on the following eight values:
+
+          * `'last'` : Each case is assigned the last non-null entry a numerical event feature.
+
+          * `'first'` : Each case is assigned the first non-null entry of a numerical event feature.
+
+          * `'mean'` : Each case is assigned the mean value over all its non-null entries of a 
+            numerical event feature.
+
+          * `'median'` : Each case is assigned the median value over all its non-null entries of a 
+            numerical event feature.
+
+          * `'sum'` : Each case is assigned the sum over all its non-null entries of a 
+            numerical event feature.
+
+          * `'prod'` : Each case is assigned the product over all its non-null entries of a 
+            numerical event feature.
+
+          * `'min'` : Each case is assigned the minimum value over all its non-null entries of a 
+            numerical event feature.
+
+          * `'max'` : Each case is assigned the maximum value over all its non-null entries of a 
+            numerical event feature.
+
         """
 
         valm._verify_numFt(features = numeric_event_list, ftr_type = 'event', feature_list = self.numerical_eventfeatures,
@@ -1035,14 +1173,24 @@ class DynamicLogPlots():
 
 
     def distinct_variants_evol(self, time_unit='days', frequency='weekly', case_assignment = 'first_event', plt_type= 'univariate', numeric_agg= 'mean', xtr_outlier_rem = True, cases_initialized = True):
-        """Plots the number of distinct variants over time, as well as the number of 
+        """
+        **Deprecated**
+
+        .. deprecated:: 0.1.1d
+          ``distinct_variants_evol()`` method will be removed in DyLoPro 0.2.0 
+          because it duplicates part of the visualization capabilities 
+          offered by the ``distinct_variants_AdvancedEvol()`` method. 
+          Use the more extensive ``distinct_variants_AdvancedEvol()`` 
+          visualization method instead.
+        
+        Plots the number of distinct variants over time, as well as the number of 
         distinct previously unseen / distinct new variants over time.
 
         All cases are grouped into time intervals of which the length is determined by the 
-        `frequency` argument. The condition that determines the time interval to which a 
-        certain case is assigned, is determined by the `case_assignment` argument. Can be 
+        ``frequency`` argument. The condition that determines the time interval to which a 
+        certain case is assigned, is determined by the ``case_assignment`` argument. Can be 
         combined with different performance measures by specifying the 
-        `plt_type` argument.
+        ``plt_type`` argument.
 
         Parameters
         ----------
@@ -1076,25 +1224,52 @@ class DynamicLogPlots():
 
         Notes
         -----
-        - ``case_assignment`` can take on the following three values:
-            - `'first_event'`: Each case is assigned to the time interval in which 
-            its first event occurs. 
-            - `'last_event'`: Each case is assigned to the time interval in which 
-            its last event occurs
-            - `'max_events'`: Out of all the time intervals in which the events of a 
+        
+        * ``case_assignment`` can take on the following three values:
+
+          * `'first_event'`: Each case is assigned to the time interval in which 
+            its first event occurs.
+
+          * `'last_event'`: Each case is assigned to the time interval in which 
+            its last event occurs.
+
+          * `'max_events'`: Out of all the time intervals in which the events of a 
             particular case occur, the case is assigned to the interval in which most 
             of its events occur. Ties among time intervals are broken by assigning the 
-            case to the first time interval. 
-        - `plt_type` can take one of the following four values:
-            - `'univariate'`: Plots the evolution of the amount of distinct variants present in each time period, 
+            case to the first time interval.
+            
+        * ``plt_type`` can take one of the following four values:
+
+          * `'univariate'`: Plots the evolution of the amount of distinct variants present in each time period, 
             as well as the amount of distinct new variants introduced in each time period.
-            - `'type_tt'`: Next ot the univariate plots, also plots the evolution of the periodically aggregated 
+
+          * `'type_tt'`: Next ot the univariate plots, also plots the evolution of the periodically aggregated 
             Throughput Time (TT) (in the time unit specified by the 'time_unit' argument).
-            - `'type_events_case'`: Next to the univariate plots, also plots the evolution of the periodically aggregated 
+
+          * `'type_events_case'`: Next to the univariate plots, also plots the evolution of the periodically aggregated 
             Number of Events Per Case (NEPC).
-            - `'type_outcome'`: Next to the univariate plots, also plots the evolution of the periodically aggregated 
+
+          * `'type_outcome'`: Next to the univariate plots, also plots the evolution of the periodically aggregated 
             fraction of cases with outcome = True. (Only applicable if an outcome is already specified upon initialization 
-            of the `DynamicLogPlots` instance, or with the `set_outcomeColumn(outcome)` method.)
+            of the `DynamicLogPlots` instance, or with the ``set_outcomeColumn(outcome)`` method.)
+
+        * ``numeric_agg`` can take on the following five values:
+
+          * `'mean'` : The requested time series are computed by taking the mean for each 
+            time interval.
+
+          * `'median'` : The requested time series are computed by taking the median for  
+            each time interval.
+
+          * `'min'` : The requested time series are computed by taking the minimum for 
+            each time interval.
+
+          * `'max'` : The requested time series are computed by taking the maximum for 
+            each time interval.
+
+          * `'std'` : The requested time series are computed by taking the standard 
+            deviation for each time interval.
+
         """
         valm._verify_distinctvars(outcome = self.outcome, time_unit = time_unit, frequency = frequency, case_assignment = case_assignment, plt_type = plt_type, 
                                     numeric_agg = numeric_agg, xtr_outlier_rem = xtr_outlier_rem, cases_initialized = cases_initialized)
@@ -1104,24 +1279,136 @@ class DynamicLogPlots():
 
 
     def distinct_variants_AdvancedEvol(self, time_unit='days', frequency='weekly', case_assignment = 'first_event', plt_type= 'univariate', numeric_agg= 'mean', xtr_outlier_rem = True, cases_initialized = True):
-        """Documentation COMING SOON...
+        """Plot the evolution of the requested aggregations over time for:
+
+        #. cases belonging to variants already seen in previous time periods
+        #. cases belonging to variants first observed in each time period
+
+        All cases are grouped into time intervals of which the length is determined by the 
+        ``frequency`` argument. The condition that determines the time interval to which a 
+        certain case is assigned, is determined by the ``case_assignment`` argument. Can be 
+        holistically combined with different performance measures by specifying the 
+        ``plt_type`` argument. 
 
         Parameters
         ----------
-        time_unit : str, optional
-            _description_, by default `'days'`
-        frequency : str, optional
-            _description_, by default `'weekly'`
-        case_assignment : str, optional
-            _description_, by default `'first_event'`
-        plt_type : str, optional
-            _description_, by default `'univariate'`
-        numeric_agg : str, optional
-            _description_, by default `'mean'`
+        time_unit : {'microseconds', 'milliseconds', 'seconds', 'minutes', 'hours', 'days', 'weeks'}
+            Time unit in which the throughput time of cases is specified, by default `'days'`.
+        frequency : {'minutely', '5-minutely', '10-minutely', 'half-hourly', 'hourly' '2-hourly', 
+                    '12-hourly', 'daily', 'weekly', '2-weekly', 'monthly', 'quarterly', 'half-yearly'}
+            Frequency by which the observations are grouped together, by default `'weekly'`.
+        case_assignment : {'first_event', 'last_event', 'max_events'}
+            Determines the condition upon which each case is assigned to a certain 
+            period, by default `'first_event'`. For a more detailed explanation 
+            of the different `case_assignment` options, see Notes.
+        plt_type : {'univariate', 'type_tt', 'type_events_case', 'type_outcome'}
+            Determines which time series are constructed and visualized, by default `'univariate'`.
+            For a more detailed explanation of the different `plt_type` options, see Notes.
+        numeric_agg : {'mean', 'median', 'min', 'max', 'std'}
+            Determines how periodic quantities are aggregated, by default `'mean'`. The specified
+            aggregation function will be applied to all the requested time series, except for 
+            those quantities that express fractions or counts (if any). For a more detailed 
+            explanation of the different `numeric_agg` options, see Notes.
         xtr_outlier_rem : bool, optional
-            _description_, by default `True`
+            If True, the vertical ranges of the plots are only determined by regular  
+            values, i.e. extreme outliers (>q3 + 3*iqr) in the time series are neglected 
+            when determining the vertical range, by default `True`.
         cases_initialized : bool, optional
-            _description_, by default `True`
+            If True, and `plt_type!='univariate'`, then the method also plots 
+            the evolution of the number of cases initialized in each period 
+            on the same graph as the one foreseen for either the Throughput Time 
+            (`plt_type='type_tt'`), the Number of Events Per Case (`plt_type='type_events_case'`) 
+            or the fraction of positive cases (`plt_type='type_outcome'`), by default `True`.
+
+        Notes
+        -----
+        
+        * ``case_assignment`` can take on the following three values:
+
+          * `'first_event'`: Each case is assigned to the time interval in which 
+            its first event occurs.
+
+          * `'last_event'`: Each case is assigned to the time interval in which 
+            its last event occurs.
+
+          * `'max_events'`: Out of all the time intervals in which the events of a 
+            particular case occur, the case is assigned to the interval in which most 
+            of its events occur. Ties among time intervals are broken by assigning the 
+            case to the first time interval.
+
+        * ``plt_type`` can take one of the following four values:
+
+          * `'univariate'`: Plots the periodic evolution of
+
+            #. the absolute amount of distinct variants present in each time period
+
+            #. the absolute amount of distinct new variants introduced in each time period
+
+            #. the fraction of cases belonging to variants already seen in previous time periods
+
+            #. the fraction of cases belonging to variants first observed in each time period
+
+          * `'type_tt'`: Next ot the univariate plots, also plots the periodic evolution of
+
+            #. the aggregated throughput time of cases pertaining to existing variants 
+               in each time period
+            
+            #. the aggregated throughput time of cases pertaining to new 
+               variants in each time period
+
+          * `'type_events_case'`: Next to the univariate plots, also plots 
+            the periodic evolution of
+          
+            #. the aggregated Number of Events Per Case (NEPC) of cases 
+               pertaining to existing variants in each time period
+            
+            #. the aggregated Number of Events Per Case (NEPC) of cases 
+               pertaining to new variants in each time period
+
+          * `'type_outcome'`: (Only applicable if an outcome is already 
+            specified upon initialization of the `DynamicLogPlots` instance, 
+            or with the ``set_outcomeColumn(outcome)`` method.) Next to the 
+            univariate plots, also plots the periodic evolution of
+
+            #. the fraction of cases with `outcome=True` of cases 
+               pertaining to existing variants in each time period 
+            
+            #. the fraction of cases with `outcome=True` of cases 
+               pertaining to new variants in each time period
+
+        * ``numeric_agg`` can take on the following five values:
+
+          * `'mean'` : The requested time series are computed by taking the mean for each 
+            time period. E.g. for `plt_type='type_tt'`, for each time interval, 
+            the mean throughput time (TT) of cases pertaining to already 
+            existing variants, and the mean TT of cases pertaining 
+            to newly introduced variants is computed.
+
+          * `'median'` : The requested time series are computed by taking the median for  
+            each time interval. E.g. for `plt_type='type_events_case'`, for each time interval, 
+            the median case length (in Number of Events Per Case, aka NEPC) 
+            of cases pertaining to already existing variants, and the median 
+            NEPC of cases pertaining to newly introduced variants is computed.
+
+          * `'min'` : The requested time series are computed by taking the minimum for 
+            each time interval. E.g. for `plt_type='type_events_case'`, for each time interval, 
+            the minimum case length (in Number of Events Per Case, aka NEPC) 
+            of cases pertaining to already existing variants, and the minimum 
+            NEPC of cases pertaining to newly introduced variants is computed.
+
+          * `'max'` : The requested time series are computed by taking the maximum for 
+            each time interval. E.g. for `plt_type='type_tt'`, for each time interval, 
+            the maximum throughput time (TT) of cases pertaining to already 
+            existing variants, and the maximum TT of cases pertaining 
+            to newly introduced variants is computed.
+
+          * `'std'` : The requested time series are computed by taking the 
+            standard deviation for each time interval. E.g. for 
+            `plt_type='type_tt'`, for each time interval, the standard 
+            deviation of the throughput time (TT) of cases pertaining to 
+            already existing variants, and the standard deviation of the TT 
+            of cases pertaining to newly introduced variants is computed.
+
         """
         valm._verify_distinctvars(outcome = self.outcome, time_unit = time_unit, frequency = frequency, case_assignment = case_assignment, plt_type = plt_type, 
                                     numeric_agg = numeric_agg, xtr_outlier_rem = xtr_outlier_rem, cases_initialized = cases_initialized)

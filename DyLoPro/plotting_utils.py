@@ -1,10 +1,13 @@
 import pandas as pd
 import numpy as np
 
-def select_string_column(log, case_agg, col, case_id_key = 'case:concept:name'):
+def select_string_column(log, 
+                         case_agg, 
+                         col, 
+                         case_id_key = 'case:concept:name'):
     """
-    Extract N columns (for N different attribute values; hotencoding) for the features 
-    dataframe for the given string attribute.
+    Extract N columns (for N different attribute values; hotencoding) for 
+    the features dataframe for the given string attribute.
 
     Code of this function inspired by source code of PM4PY. 
 
@@ -42,21 +45,27 @@ def select_string_column(log, case_agg, col, case_id_key = 'case:concept:name'):
 def select_number_column(log, case_agg, col, numEventFt_transform, 
                          case_id_key = 'case:concept:name') -> pd.DataFrame:
     """
-    Extract a column for the features dataframe for the given numeric attribute.
+    Extract a column for the features dataframe for the given numeric 
+    attribute.
 
     Code of this function inspired by source code of PM4PY. 
 
     Parameters
     ----------
     log : pandas.DataFrame
-        Event log. 
+        Event log.
+
     case_agg
-        Feature dataframe
+        Feature dataframe.
+
     col
-        Numeric column
-    numEventFt_transform : {'last', 'first', 'mean', 'median', 'sum', 'prod', 'min', 'max'}
-        Determines the way in which these numerical event features are transformed to the 
-        case level. By default 'last'. 
+        Numeric column.
+
+    numEventFt_transform : {'last', 'first', 'mean', 'median', 'sum', 'prod', 
+                            'min', 'max'}
+        Determines the way in which these numerical event features are 
+        transformed to the case level. By default 'last'.
+        
     case_id_key
         Case ID key
 
@@ -73,23 +82,29 @@ def select_number_column(log, case_agg, col, numEventFt_transform,
 def get_features_df(log: pd.DataFrame, column_list,
                     case_id_key = 'case:concept:name', numEventFt_transform = 'last') -> pd.DataFrame:
     """
-    Given a dataframe and a list of columns, performs an automatic feature extraction
+    Given a dataframe and a list of columns, performs an automatic feature 
+    extraction.
 
     Code of this function inspired by source code of PM4PY. 
 
     Parameters
     ----------
     log : pandas.DataFrame
-        Event log. 
+        Event log.
+
     column_list : list of str
-        The column names (in 'log') for which the event features need to be elevated 
-        to the case level. 
+        The column names (in 'log') for which the event features need to be 
+        elevated to the case level.
+
     case_id_key : str, optional
-        Column name (in 'log') that contains the case ID. By default 'case:concept:name'.
-    numEventFt_transform : {'last', 'first', 'mean', 'median', 'sum', 'prod', 'min', 'max'}
-        If any numeric event features contained in 'column_list', 'numEventFt_transform' 
-        determines the way in which these numerical event features are transformed to the 
-        case level. By default 'last'. 
+        Column name (in 'log') that contains the case ID. By default 
+        'case:concept:name'.
+
+    numEventFt_transform : {'last', 'first', 'mean', 'median', 'sum', 'prod', 
+                            'min', 'max'}
+        If any numeric event features contained in ``column_list``, 
+        ``numEventFt_transform`` determines the way in which these numerical 
+        event features are transformed to the case level. By default 'last'.
 
     Returns
     ----------
@@ -105,35 +120,53 @@ def get_features_df(log: pd.DataFrame, column_list,
             case_agg = select_number_column(log, case_agg, col, numEventFt_transform, case_id_key=case_id_key)
     return case_agg
 
-def _event_fts_to_tracelvl(log, event_features, numEventFt_transform = 'last'):
+def _event_fts_to_tracelvl(log, 
+                           event_features, 
+                           numEventFt_transform = 'last'):
     """Transforms categorical and numerical event features to the trace level.
 
     Parameters
     ----------
     log : pandas.DataFrame
-        Current event log. 
+        Current event log.
+
     event_features : list of str
-        Column names of the event features that need to be elevated to the trace level. 
-    numEventFt_transform : {'last', 'first', 'mean', 'median', 'sum', 'prod', 'min', 'max'}
-        If any numeric event features contained in 'event_features', 'numEventFt_transform' 
-        determines the way in which these numerical event features are transformed to the 
+        Column names of the event features that need to be elevated to the 
+        trace level.
+
+    numEventFt_transform : {'last', 'first', 'mean', 'median', 'sum', 'prod', 
+                            'min', 'max'}
+        If any numeric event features contained in ``event_features``, 
+        ``numEventFt_transform`` determines the way in which these 
+        numerical event features are transformed to the 
         case level. By default 'last'. 
 
     Returns
     -------
-    _type_
-        _description_
-    """
-    '''Transforms categorical and numeric event features to the trace level.
-        args:
-            - log               : pd.DataFrame
-            - event_features    : list of strings, containing the column names of the event features to be preprocessed. 
+    log : pd.DataFrame
+        Enhanced event log in which the event features are transformed to the 
+        trace level. 
 
-        returns:
-            - log: enhanced pd.DataFrame in which the event features are transformed to the trace level:
-                    - numeric event features: last recorded (non-null) value for each trace taken; name= [original name]+'_trace'
-                    - categorical event features: binary column (0 - 1) added for each level; names = [original name]+'_'+[level name]
-    '''
+        For:
+
+        * numeric event features: For each trace, all **non-null** 
+          occurences of that feature are aggregated into a single case 
+          measure based on the ``numEventFt_transform`` argument. If a 
+          case only contains null values for that feature, it is 
+          assigned an NaN value. 
+
+        * categorical event features: A binary column (0-1) is added for each 
+          level of that feature. For each case, a value of 1 is assigned if 
+          that level occurs at least in one of its events, and 0 otherwise. 
+          It is important to note that, for categorical event features, this 
+          function is only called with a reduced event log, in which only the 
+          levels of interest for a certain categorical event feature are 
+          retained, while all other levels are discarded. In that way, 
+          high-level categoricals do not cause memory overload and / or 
+          computational bottlenecks. As such, for categorical event features, 
+          this function is only called for one feature at a time. 
+
+    """
     feature_table = get_features_df(log, event_features, numEventFt_transform = numEventFt_transform)
     log = log.merge(feature_table, on='case:concept:name', how='left', suffixes=("","_trace"))
     return log
@@ -145,11 +178,11 @@ def determine_time_col(frequency, case_assignment):
 
     Parameters
     ----------
-    frequency : {'minutely', '5-minutely', '10-minutely', 
-                'half-hourly', 'hourly' '2-hourly', '12-hourly', 'daily', 
-                'weekly', '2-weekly', 'monthly', 'quarterly', 'half-yearly'}
+
+    frequency : {'minutely', '5-minutely', '10-minutely', 'half-hourly', 'hourly' '2-hourly', '12-hourly', 'daily', 'weekly', '2-weekly', 'monthly', 'quarterly', 'half-yearly'}
         Determines the intervals of time periods to which cases are 
         assigned.
+
     case_assignment : {'first_event', 'last_event', 'max_events'}
         Given the time intervals determined by 'frequency', 
         'case_assigment' determines the the condition upon which
@@ -159,7 +192,8 @@ def determine_time_col(frequency, case_assignment):
     -------
     time_col : str
         Time period column that contains for each case the time period
-        it should be assigned to. 
+        it should be assigned to.
+
     """
     frequencies = ['minutely', '5-minutely', '10-minutely', 'half-hourly', 
                    'hourly', '2-hourly', '12-hourly', 'daily', 'weekly', 
@@ -184,13 +218,22 @@ def determine_time_col(frequency, case_assignment):
     return time_col 
 
 def determine_tt_col(time_unit):
-    '''
-        args: 
-            - time_unit: string = 'microseconds', 'milliseconds', 'seconds', 'minutes', 'hours', 'days' or 'weeks'; time unit for Throughput Time 
+    """Determine the appropriate time unit column for the throughput time 
+    based on the ``time_unit`` argument specified by the user. 
 
-        returns:
-            - tt_col: string ; name of the throughput time (tt) column with correct time unit. 
-    '''
+    Parameters
+    ----------
+
+    time_unit : {'microseconds', 'milliseconds', 'seconds', 'minutes', 
+                'hours', 'days', 'weeks'}
+        Time unit for the throughput time specified by the user. 
+
+    Returns
+    -------
+    tt_col : str
+        Column name throughput time with correct unit in the preprocessed 
+        event log. 
+    """
     tt_cols = ['tt_microseconds', 'tt_milliseconds', 'tt_seconds', 'tt_minutes', 'tt_hours', 'tt_days', 'tt_weeks']
     time_unit_list = ['microseconds', 'milliseconds', 'seconds', 'minutes', 'hours', 'days', 'weeks']
     time_unit_idx = time_unit_list.index(time_unit)
@@ -199,15 +242,26 @@ def determine_tt_col(time_unit):
     return tt_col
 
 def get_outcome_percentage(filtered_log, outcome, time_col):
-    ''' Computes the periodic percentage of cases with outcome == 1 for a filtered log
-        args:
-            - filtered_log: pd.DataFrame; case log (i.e. log with 1 row per case) that is filtered based on a condition.
-            - outcome:      string of the outcome column. (Has to be a binary outcome column with 0 and 1's)
-            - time_col:     string of the periodic timestamp column.
+    """Compute for each time bucket the fraction of cases with 
+    ``outcome=1`` for the cases in ``filtered_log``. 
 
-        returns:
-            - periodic % of (the filtered) cases with outcome == 1 
-    '''
+    Parameters
+    ----------
+    filtered_log : pd.DataFrame
+        FIltered event log. The case filtering is performed by the plotting 
+        functions calling this util function, and depends on the purpose and 
+        arguments of these plotting functions. 
+    outcome : str
+        Name of the outcome column in ``filtered_log``.
+    time_col : str
+        The time column of interest in the event log. Determined in the 
+        plotting functions calling this util function. 
+
+    Returns
+    -------
+    pd.DataFrame
+        Periodic fraction of cases with ``outcome=1``. 
+    """
     # Periodic number of cases in the filtered log. (I.e. periodic number of cases that satisfy the condition on which you have filtered.)
     per_counts = filtered_log.pivot_table(values= 'case:concept:name',index= time_col, aggfunc='count', fill_value=0)
     per_counts.columns = ['total']
@@ -227,16 +281,46 @@ def get_outcome_percentage(filtered_log, outcome, time_col):
     return per_counts[['prc_true']]
 
 def get_dfr_time(log, case_log, dfr_list, time_col, numeric_agg):
-    ''' For each case: computes the performance (time between) for each occurance of the given dfr (if any).
-        args: 
-            - log: pd.DataFrame 
-            - dfr_list: list of tuples; [('activity_string_1', 'activity_string_2'), ...]
+    """Compute, for each case, the DFR performance (i.e. time elapsed 
+    between the occurrence of the first and second activity of a given 
+    Directly-Follows Relationship (DFR)) for each occurrence of each 
+    DFR in ``dfr_list``. Then, the cases are grouped into discrete 
+    time buckets, producing for each DFR a set of DFR performances. 
+    Finally, for each of the DFRs in ``dfr_list``, an aggregate 
+    DFR perforamnce is computed for each time bucket, with the 
+    aggregation function being determined by the ``numeric_agg`` 
+    parameter. 
 
-        returns: 
-            - period_dfr_perf:  pd.DataFrame; aggregated periodic performances (time between) for each of the given dfr's in dfr_list
-            - perf_units_cols:  list of strings; indicating the automatically determined time_unit for each of the columns / dfr's. The possibilities
-                                are 'days', 'hours', 'minutes', 'seconds', 'milliseconds' and 'microseconds'. 
-    '''
+    Parameters
+    ----------
+    log : pd.DataFrame
+        The (preprocessed) event log. 
+    case_log : pd.DataFrame
+        Dataframe containing only one row for each case. 
+    dfr_list : list of tuple 
+        The Directly-Follows Relations for which the periodically aggregated 
+        DFR performances are computed. Should be formatted as follows: 
+        [('activity_string_1', 'activity_string_2'), ...].
+        _description_
+    time_col : str
+        The time column of interest in the event log. Determined in the 
+        plotting functions calling this util function. 
+    numeric_agg : str
+        How the DFRs assigned to each time bucket should be aggregated 
+        towards one aggregated measure. 
+
+    Returns
+    -------
+    period_dfr_perf : pd.DataFrame 
+        Dataframe with on the rows the chronologically ordered time buckets, 
+        and with each column being the aggregated DFR performances for one of 
+        of the DFRs listed in ``dfr_list``.
+    perf_units_cols : list of string
+        The most suitable time units are, for each requested DFR separately, 
+        determined automatically. This list contains these time units in the 
+        correct order, such that the appropriate time units can be displayed 
+        in the visualizations. 
+    """
 
     time_products = [1, 24, 1440, 86400, 86400000, 86400000000]
     perf_units = ['days', 'hours', 'minutes', 'seconds', 'milliseconds', 'microseconds']
@@ -276,13 +360,22 @@ def get_dfr_time(log, case_log, dfr_list, time_col, numeric_agg):
     return period_dfr_perf, perf_units_cols 
 
 def get_maxrange(agg_df):
-    ''' Computes for each of the given arrays / pd Series the maximum y-range, by neglecting extreme outliers (values > q3 + 3*iqr). 
-        args:
-            - agg_df: (num periods, num series) - shaped dataframe, containing the series for which outliers should be accounted for before plotting. 
-        
-        returns: 
-            - max_values:   (num series, ) - shaped np.ndarray, containing the max y-values < q3 + 3*iqr for each of the columns / series in agg_df. 
-    '''
+    """Compute for each of the given arrays / pd.Series the maximum value 
+    that should not be considered as an extreme outlier (i.e. < q3 + 3 x iqr).
+
+    Parameters
+    ----------
+    agg_df : pd.DatFrame
+        Shape (num periods, num series), with num periods being the amount of 
+        time buckets, and num series being the amount of time series for 
+        which outliers should be accounted for. 
+
+    Returns
+    -------
+    max_values : np.ndarray
+        The 'num series' maximum values not to be considered as extreme 
+        outliers.
+    """
 
     q1 = np.quantile(agg_df, 0.25, axis = 0) # shape (num series, )
     q3 = np.quantile(agg_df, 0.75, axis = 0) # shape (num series, )
@@ -295,14 +388,20 @@ def get_maxrange(agg_df):
 
 
 def get_variant_case(log):
-    ''' Takes the whole log as input, and returns a pd.DataFrame with the case id in column 0, and the variant (as a tuple) in column 1
-        
-        args:
-            - log: pd.DataFrame
+    """Return a pd.Dataframe with a row row for each case, containing the 
+    unique case ID and the corresponding variant (as a tuple) in its columns.
 
-        returns:
-            - case_variant: pd.DataFrame with 1 row for each case and 2 columns: 'case:concept:name' and 'variant'. 
-    '''
+    Parameters
+    ----------
+    log : pd.DataFrame
+        The event log.
+
+    Returns
+    -------
+    case_variant : pd.DataFrame
+        Dataframe with one row for each case and two columns, 
+        'case:concept:name' and 'variant'.
+    """
     log_loc = log[['case:concept:name', 'concept:name']].copy()
     case_variant = log_loc.groupby(['case:concept:name'], as_index = False, sort = False).agg({'concept:name': ','.join})
     case_variant.columns = ['case:concept:name', 'variant']
@@ -310,17 +409,32 @@ def get_variant_case(log):
     return case_variant
 
 def get_tt_ratios(log, num_fts_list, time_col, numeric_agg):
-    ''' Computes the periodic ratio of throughput time over numerical feature and automatically determines the most appropriate time unit for that ratio 
-        for each of the numerical features in num_fts_list simultaneously. 
-        args: 
-            - log               :   pd.DataFrame 
-            - num_fts_list      :   list of strings; containing the column names of the numerical features. 
+    """Compute the periodic ratio of throughput time over numerical feature 
+    and automatically determine the most appropriate time unit for that ratio 
+    for each of the numerical features in ``num_fts_list`` simultaneously. 
 
-        returns: 
-            - period_ttr        :   pd.DataFrame; aggregated periodic ratios for each of the given numerical features in num_fts_list
-            - perf_units_cols   :   list of strings; indicating the automatically determined time_unit for each of the columns / given numerical features. The possibilities
-                                    are 'days', 'hours', 'minutes', 'seconds', 'milliseconds' and 'microseconds'. 
-    '''
+    Parameters
+    ----------
+    log : pd.DataFrame
+        The event log.
+    num_fts_list : list of str
+        Column names of numeric features of interest.
+    time_col : str
+        The time column of interest in the event log. Determined in the 
+        plotting functions calling this util function. 
+    numeric_agg : str
+        How the ratios assigned to each time bucket should be aggregated 
+        towards one aggregated measure. 
+
+    Returns
+    -------
+    period_ttr : pd.DataFrame
+        Periodically aggregated TT ratios for each of the numeric features 
+        given in `num_fts_list`.
+    perf_units_cols : list of str
+        Indicating the automatically determined time unit for each of the 
+        requested numeric features.
+    """
     log_loc = log.copy()
     case_log_cop = log_loc.drop_duplicates(subset = 'case:concept:name').copy()
     time_products = [1, 24, 1440, 86400, 86400000, 86400000000]
@@ -360,15 +474,21 @@ def get_tt_ratios(log, num_fts_list, time_col, numeric_agg):
     return period_ttr, ratio_units_cols 
 
 def get_sorted_DFRs(log):
-    ''' Retrieves all the Directly-Follows Relations (DFRs) in the log, sorts them from highest to lowest frequency, 
-        and returns them as a list of tupples. E.g. [('act_1_dfr_1', 'act_2_dfr_1'), ('act_1_dfr_2', 'act_2_dfr_2'), ...]
+    """Retrieve all the Directly-Follows Relations (DFRs) in the log, sort
+    them from highest to lowest frequency, and return them as a list of 
+    tuples. E.g. [('act_1_dfr_1', 'act_2_dfr_1'), ('act_1_dfr_2', 'act_2_dfr_2'), 
+    ...].
 
-        args:
-            - log       :   pd.DataFrame
-        
-        returns:
-            - list_dfr  :   sorted list of all the DFRs, as specified here above. 
-    '''
+    Parameters
+    ----------
+    log : pd.DataFrame
+        The event log.
+
+    Returns
+    -------
+    list_dfr : str of tuple
+        Sorted list of DFRs (in descending order of frequency).
+    """
     locallog = log[['case:concept:name', 'concept:name']].copy()
     locallog['next:concept:name'] = locallog.groupby('case:concept:name')['concept:name'].shift(-1)
     locallog = locallog.dropna(subset='next:concept:name').copy()
@@ -492,20 +612,29 @@ def get_filtered_var_df(variant_df, max_k, variants, counts):
     
 
 def get_uniq_varcounts(log, time_col):
-    ''' Computes the number of distinct variants in each time bucket, as well as the number of distinct previously 
-        unseen / distinct new variants in each time bucket. 
+    """Compute the number of distinct variants in each consecutive time 
+    bucket, as well as the number of distinct previously unseen variants 
+    in each time bucket.
 
-        args:
-            - log               :   pd.DataFrame, already enhanced with a column that contains the variant of that case. 
-            - time_col          :   string; indicating the column in which the 'periodic group' of that case is documented.
-        
-        returns:
-            - period_varcounts  :   pd.DataFrame containing:
-                                    -   the sorted time periods / buckets as the indices
-                                    -   the number of distinct variants in each time bucket / period as the 'num_distinct_vars' column
-                                    -   the number of distinct previously unseen / dinstinct new variants in each time bucket as the
-                                        'num_NEW_distinct_vars' column 
-    '''
+    Parameters
+    ----------
+    log : pd.DataFrame
+        Event log that is already enhanced, prior to this function being 
+        called, with an additional 'variant' column containing the variant 
+        of each case. 
+    time_col : str
+        The time column of interest in the event log. Determined in the 
+        plotting functions calling this util function. 
+
+    Returns
+    -------
+    periodic_varcounts : pd.DataFrame
+        Containing the chronologically ordered time buckets as the indices, 
+        and two columns, containing for each time bucket the number of 
+        distinct variants, and the number of distinct variants not seen in 
+        any of the preceding periods, respectively. 
+    """
+
     # First the amount of distinct variants (not per se unseen) in each period:
     local_log = log[['case:concept:name', time_col, 'variant']].copy()
     local_log = local_log.drop_duplicates(subset= 'case:concept:name')
@@ -525,18 +654,29 @@ def get_uniq_varcounts(log, time_col):
     return period_varcounts
 
 def get_ordered_variantMap(case_log, time_col):
-    ''' Computes a variant mapping that maps the tuple representation of a variant to a unique string. The mapping is ordered. 
+    """Computes a variant mapping that maps the tuple representation of a 
+    variant to a unique string. The mapping is ordered. Only used by the 
+    ``get_neVar_cases()`` util function in this same module.
 
-        args:
-            - case_log          :   pd.DataFrame, 1 row per case, already enhanced with a column that contains the variant of that case. 
-            - time_col          :   string; indicating the column in which the 'periodic group' of that case is documented.
-        
-        returns:
-            - case_log               :   pd.DataFrame containing an additional column: variant_str'
-            - periodic_newvars  :   pd.DataFrame containing 2 columns: 1st column containing the unique periodic timestamps (determined by time_col),
-                                    and the 2nd column containing the tuple of (mapped) variant strings containing the previously unseen variants that
-                                    occurred for the first time in that time period. 
-    '''
+    Parameters
+    ----------
+    case_log : pd.DataFrame
+        Event log containing only one row for each case. Already enhanced with 
+        a column that contains the variant of that case.
+    time_col : str
+        Column name specifying the relevant time bucket each case should be 
+        assigned to. 
+
+    Returns
+    -------
+    case_log : pd.DataFrame
+        case_log containing an additional column 'variant_str'.
+    periodic_newvars : pd.DataFrame 
+        Contains two columns, the chronologically ordered unique periodic 
+        timestamps / time buckets, and a tuple of mapped variant strings in 
+        the second column containing the variants that were first observed 
+        in the corresponding time bucket. 
+    """
     local_log = case_log[['case:concept:name', 'time:timestamp', time_col, 'variant']].copy()
     local_log = local_log.drop_duplicates(subset = 'case:concept:name')
     local_log = local_log.sort_values([time_col, 'time:timestamp'])
@@ -554,18 +694,31 @@ def get_ordered_variantMap(case_log, time_col):
     return case_log, periodic_newvars
 
 def get_newVar_cases(log, time_col):
-    ''' Determines which cases belong to variants that were introduced for the first time during its corresponding periodic timestamp (determined by time_col). 
+    """Determines for each consecutive time period / time bucket the cases 
+    pertaining to variants that were first observed in that time period. 
+    
+    Only called by the ``distinct_variants_AdvancedEvol()`` plotting method. 
 
-        args:
-            - log               :   pd.DataFrame, already enhanced with a column that contains the variant of that case. 
-            - time_col          :   string; indicating the column in which the 'periodic group' of that case is documented.
-        
-        returns:
-            - log               :   pd.DataFrame containing an additional column: variant_str'
-            - periodic_newvars  :   pd.DataFrame containing 2 columns: 1st column containing the unique periodic timestamps (determined by time_col),
-                                    and the 2nd column containing the tuple of (mapped) variant strings containing the previously unseen variants that
-                                    occurred for the first time in that time period. 
-    '''
+    Parameters
+    ----------
+    log : pd.DataFrame 
+        Event log that is already enhanced, prior to this function being 
+        called, with an additional 'variant' column containing the variant 
+        of each case. 
+    time_col : str
+        The time column of interest in the event log. Determined in the 
+        plotting functions calling this util function. 
+
+    Returns
+    -------
+    log : pd.DataFrame
+        Event log containing additional column 'variant_str'.
+    periodic_newvars : pd.DataFrame 
+        Contains two columns, the chronologically ordered unique periodic 
+        timestamps / time buckets, and a tuple of mapped variant strings in 
+        the second column containing the variants that were first observed 
+        in the corresponding time bucket. 
+    """
     loc_log = log.drop_duplicates(subset = 'case:concept:name').copy()
     case_id_log = loc_log[['case:concept:name']].copy()
     enhanced_log, periodic_newvars = get_ordered_variantMap(case_log = loc_log, time_col = time_col)

@@ -20,6 +20,12 @@ If you are reporting a bug, please include:
 - Any details about your local setup that might be helpful in troubleshooting.
 - Detailed steps to reproduce the bug.
 
+### Write Test Functions 
+
+
+Currently, the test folder contains empty test modules. These test modules 
+are still to be developed. 
+
 ### Fix Bugs
 
 
