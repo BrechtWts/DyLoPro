@@ -232,9 +232,9 @@ The visualization methods offered by the **DyLoPro package** are
 consequently meant to be continuously extended and improved. Please find 
 the visualization methods extending the framework listed below:
 
-- ``distinct_variants_evol()`` : __NOTE__: Deprecated. Will be removed in 
-  future versions. Use the ``distinct_variants_AdvancedEvol()`` instead. 
-- ``distinct_variants_AdvancedEvol()``
+- [``distinct_variants_evol()``](https://dylopro.readthedocs.io/en/latest/DyLoPro.html#DyLoPro.DynamicLogPlotting.DynamicLogPlots.distinct_variants_evol) : __NOTE__: Deprecated. Will be removed in 
+  future versions. Use the [``distinct_variants_AdvancedEvol()``](https://dylopro.readthedocs.io/en/latest/DyLoPro.html#DyLoPro.DynamicLogPlotting.DynamicLogPlots.distinct_variants_AdvancedEvol) instead. 
+- [``distinct_variants_AdvancedEvol()``](https://dylopro.readthedocs.io/en/latest/DyLoPro.html#DyLoPro.DynamicLogPlotting.DynamicLogPlots.distinct_variants_AdvancedEvol)
 
 ## Citing DyLoPro
 A Demo paper presenting the DyLoPro package is currently in the making. 
