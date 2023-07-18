@@ -20,6 +20,8 @@ contourpy==1.1.0
     # via matplotlib
 cycler==0.11.0
     # via matplotlib
+deprecated==1.2.14
+    # via -r docs/requirements.in
 docutils==0.18.1
     # via
     #   sphinx
@@ -95,3 +97,5 @@ tzdata==2023.3
     # via pandas
 urllib3==2.0.3
     # via requests
+wrapt==1.15.0
+    # via deprecated

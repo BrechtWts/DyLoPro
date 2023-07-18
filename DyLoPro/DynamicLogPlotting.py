@@ -234,7 +234,7 @@ class DynamicLogPlots():
             evolution of the periodically aggregated DFR performance is plotted. The DFR 
             performance refers to the time elapsed between the first and last activity of 
             that DFR. The time unit in which these periodic performance aggregations are 
-            expressed, is automatically determined based on their magnitude. __NOTE__ that 
+            expressed, is automatically determined based on their magnitude. **NOTE** that 
             the `'type_dfr_performance'` representation type is a special case, as it is 
             the only representation type in which cases can deliver more than one measure 
             for a certain DFR. I.e. cases that contain more than one occurrence of a 
@@ -370,7 +370,7 @@ class DynamicLogPlots():
             evolution of the periodically aggregated DFR performance is plotted. The DFR 
             performance refers to the time elapsed between the first and last activity of
             that DFR. The time unit in which these periodic performance aggregations are 
-            expressed, is automatically determined based on their magnitude. __NOTE__ that 
+            expressed, is automatically determined based on their magnitude. **NOTE** that 
             the `'type_dfr_performance'` representation type is a special case, as it is 
             the only representation type in which cases can deliver more than one measure 
             for a certain DFR. I.e. cases that contain more than one occurrence of a 
@@ -1176,7 +1176,7 @@ class DynamicLogPlots():
         """
         **Deprecated**
 
-        .. deprecated:: 0.1.1d
+        .. deprecated:: 0.1.1
           ``distinct_variants_evol()`` method will be removed in DyLoPro 0.2.0 
           because it duplicates part of the visualization capabilities 
           offered by the ``distinct_variants_AdvancedEvol()`` method. 

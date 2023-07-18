@@ -45,8 +45,8 @@ appropriate application of downstream process mining techniques._
 
 
 ## Documentation
-You can consult the documentation of DyLoPro [__here__](https://DyLoPro.readthedocs.io). __COMING SOON__
-...
+You can consult the documentation of DyLoPro [__here__](https://DyLoPro.readthedocs.io). 
+
 The following terms are used interchangeably throughout the documentation:
 - *'case'* and *'trace'*
 - *'time period'*, *'time bucket'* and *'time interval'*
@@ -118,9 +118,9 @@ message describing what went wrong and how it can be resolved.
 
 The formatting requirements of the event log, and of all of the arguments 
 needed to initialize a ``DynamicLogPlots`` instance (see code block above) 
-can be consulted __HERE__ __ADD LINK TO READTHEDOCS THAT SPECIFICALLY GOES TO INIT METHOD OF THE CLASS__
+can be consulted [__here__](https://dylopro.readthedocs.io/en/latest/DyLoPro.html#DyLoPro.DynamicLogPlotting.DynamicLogPlots).
 
-### Step 2: Accessing all visualization methods (also say something about the additional add methods)
+### Step 2: Accessing all visualization methods
 Assuming [Step 1](#step-1-initializing-a-dynamiclogplots-instance) is 
 successfully completed, you can now easily access all visualization methods 
 by simply invoking the appropriate methods on ``plot_object``.
@@ -219,14 +219,14 @@ navigate to the detailled documentation of each methodd by clicking on it.
 
 |    | Log Concept   | Method 1      | Method 2  |
 | ---| :-----------: |:-------------:| :-------: |
-|  1 | Variants      | ``topK_variants_evol()`` | ``variants_evol()`` |
-|  2 | Directly-Follows Relations      | ``topK_dfr_evol``      |  ``dfr_evol()`` |
-|  3 | Categorical Case Feature | ``topK_categorical_caseftr_evol()``      |    / |
-|  4 | Numerical Case Features | ``num_casefts_evol()``      |    / |
-|  5 | Categorical Event Feature | ``topK_categorical_eventftr_evol()``      |    / |
-|  6 | Numerical Event Features | ``num_eventfts_evol()``      |    / |
+|  1 | Variants      | [``topK_variants_evol()``](https://dylopro.readthedocs.io/en/latest/DyLoPro.html#DyLoPro.DynamicLogPlotting.DynamicLogPlots.topK_variants_evol) | [``variants_evol()``](https://dylopro.readthedocs.io/en/latest/DyLoPro.html#DyLoPro.DynamicLogPlotting.DynamicLogPlots.variants_evol) |
+|  2 | Directly-Follows Relations      | [``topK_dfr_evol()``](https://dylopro.readthedocs.io/en/latest/DyLoPro.html#DyLoPro.DynamicLogPlotting.DynamicLogPlots.topK_dfr_evol)      |  [``dfr_evol()``](https://dylopro.readthedocs.io/en/latest/DyLoPro.html#DyLoPro.DynamicLogPlotting.DynamicLogPlots.dfr_evol) |
+|  3 | Categorical Case Feature | [``topK_categorical_caseftr_evol()``](https://dylopro.readthedocs.io/en/latest/DyLoPro.html#DyLoPro.DynamicLogPlotting.DynamicLogPlots.topK_categorical_caseftr_evol)      |    / |
+|  4 | Numerical Case Features | [``num_casefts_evol()``](https://dylopro.readthedocs.io/en/latest/DyLoPro.html#DyLoPro.DynamicLogPlotting.DynamicLogPlots.num_casefts_evol)      |    / |
+|  5 | Categorical Event Feature | [``topK_categorical_eventftr_evol()``](https://dylopro.readthedocs.io/en/latest/DyLoPro.html#DyLoPro.DynamicLogPlotting.DynamicLogPlots.topK_categorical_eventftr_evol)      |    / |
+|  6 | Numerical Event Features | [``num_eventfts_evol()``](https://dylopro.readthedocs.io/en/latest/DyLoPro.html#DyLoPro.DynamicLogPlotting.DynamicLogPlots.num_eventfts_evol)      |    / |
 
-Finally, it is also well-worth mentioning that the extensive capabilities  
+Finally, it is also well-worth mentioning that the extensive capabilities 
 proposed in the the *DyLoPro framework* are not meant to be exhaustive. 
 The visualization methods offered by the **DyLoPro package** are 
 consequently meant to be continuously extended and improved. Please find 
@@ -235,16 +235,6 @@ the visualization methods extending the framework listed below:
 - ``distinct_variants_evol()`` : __NOTE__: Deprecated. Will be removed in 
   future versions. Use the ``distinct_variants_AdvancedEvol()`` instead. 
 - ``distinct_variants_AdvancedEvol()``
-
-3 steps for visualizing ... 
-The formal exposition of the *DyLoPro framework* can be found in 
-[*Section 4*](https://github.com/BrechtWts/DyLoPro/blob/master/DyLoPro_Framework_Preprint.pdf), 
-which provides a detailed and comprehensive description of its principles and 
-methodology. 
-
-So first you demonstrate how to import it and how to initialize a dynamiclogplots instance in a generic way. You quickly go over its different arguments and assumptions. 
-Then you refer to paper 
-case studies link ... on detailled and extensive examples on how to leverage the different plotting functionalities. 
 
 ## Citing DyLoPro
 A Demo paper presenting the DyLoPro package is currently in the making. 
@@ -258,7 +248,9 @@ Utrecht, and accordingly published in its main proceedings.
 In the meantime, if you are using __DyLoPro__ in your scientiic work, please 
 cite __DyLoPro__ as follows:
 
-> *Wuyts, B., Weytjens, H., Vanden Broucke, S.,  De Weerdt, J. (2023). DyLoPro: Profiling the Dynamics of Event Logs. In: Business Process Management. BPM 2023.*
+> *B. Wuyts, H. Weytjens, S. vanden Broucke, J. De Weerdt, DyLoPro: 
+Profiling the dynamics of event logs, in: Business Process Management, 
+Springer International Publishing, 2023*
 
 The full citation will be provided as soon as it is available. A preprint of the (already peer-reviewed) BPM paper can be found [here](https://github.com/BrechtWts/DyLoPro/blob/master/DyLoPro_Framework_Preprint.pdf).
 
