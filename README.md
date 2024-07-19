@@ -17,11 +17,9 @@ dynamics over time from different **process perspectives**.
 
 > DyLoPro library is ready-to-use and efficient software implementation of the 
 > identically named **_DyLoPro framework_**, introduced in the paper 
-> ***DyLoPro: Profiling the Dynamics of Event Logs***, which will be 
-> presented at the [BPM 2023](https://bpm2023.sites.uu.nl/) conference in 
-> Utrecht, and accordingly published in its main proceedings. 
-> A preprint of the (already peer-reviewed) BPM paper can be found 
-> [here](https://github.com/BrechtWts/DyLoPro/blob/master/DyLoPro_Framework_Preprint.pdf).
+> ***DyLoPro: Profiling the Dynamics of Event Logs***.
+> The paper can be found 
+> [here](https://doi.org/10.1007/978-3-031-41620-0_9).
 
 _DyLoPro is a comprehensive visual analytics framework designed to 
 explore event log dynamics over time. DyLoPro’s comprehensiveness 
@@ -241,18 +239,14 @@ A Demo paper presenting the DyLoPro package is currently in the making.
 
 The DyLoPro package is the software implementation of the identically named 
 _DyLoPro framework_ proposed in the paper 
-***DyLoPro: Profiling the Dynamics of Event Logs***. This paper will be 
-presented at the [BPM 2023](https://bpm2023.sites.uu.nl/) conference in 
-Utrecht, and accordingly published in its main proceedings. 
+***DyLoPro: Profiling the Dynamics of Event Logs***. 
 
-In the meantime, if you are using __DyLoPro__ in your scientiic work, please 
+If you are using __DyLoPro__ in your scientific work, please 
 cite __DyLoPro__ as follows:
 
-> *B. Wuyts, H. Weytjens, S. vanden Broucke, J. De Weerdt, DyLoPro: 
-Profiling the dynamics of event logs, in: Business Process Management, 
-Springer International Publishing, 2023*
+> *Wuyts, B., Weytjens, H., vanden Broucke, S., De Weerdt, J. (2023). DyLoPro: Profiling the Dynamics of Event Logs. In: Di Francescomarino, C., Burattin, A., Janiesch, C., Sadiq, S. (eds) Business Process Management. BPM 2023. Lecture Notes in Computer Science, vol 14159. Springer, Cham. https://doi.org/10.1007/978-3-031-41620-0_9*
 
-The full citation will be provided as soon as it is available. A preprint of the (already peer-reviewed) BPM paper can be found [here](https://github.com/BrechtWts/DyLoPro/blob/master/DyLoPro_Framework_Preprint.pdf).
+The full paper can be found [here](https://doi.org/10.1007/978-3-031-41620-0_9).
 
 ## Case Studies
 The DyLoPro package has already been used to conduct an extensive analysis 
