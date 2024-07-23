@@ -235,8 +235,7 @@ the visualization methods extending the framework listed below:
 - [``distinct_variants_AdvancedEvol()``](https://dylopro.readthedocs.io/en/latest/DyLoPro.html#DyLoPro.DynamicLogPlotting.DynamicLogPlots.distinct_variants_AdvancedEvol)
 
 ## Citing DyLoPro
-A Demo paper presenting the DyLoPro package is currently in the making. 
-
+### The __DyLoPro Framework__
 The DyLoPro package is the software implementation of the identically named 
 _DyLoPro framework_ proposed in the paper 
 ***DyLoPro: Profiling the Dynamics of Event Logs***. 
@@ -248,12 +247,21 @@ cite __DyLoPro__ as follows:
 
 The full paper can be found [here](https://doi.org/10.1007/978-3-031-41620-0_9).
 
+### Demo Paper
+A demo paper, specifically focussing on the framework's software implementation, i.e. the __DyLoPro Python package__, can be found [here](https://ceur-ws.org/Vol-3648/paper_3468.pdf), and can be cited as follows:
+
+> *Wuyts, B., Weytjens, H., vanden Broucke, S., De Weerdt, J. (2023). The DyLoPro Library: Comprehensively Profiling the Dynamics of Event Logs by Means of Visual Analytics. In: CEUR Workshop Proceedings, vol 3468, pp. 1-5. CEUR-WS.org. ISSN 1613-0073*
+
+A short **Demo video** accompanying the Demo paper can be accessed by clicking on the thumbnail image underneath:
+
+[![DyLoPro Python Library - ICPM 2023 Demo Video](https://img.youtube.com/vi/Z9hqpkGbta0/0.jpg)](https://www.youtube.com/watch?v=Z9hqpkGbta0).
+
 ## Case Studies
 The DyLoPro package has already been used to conduct an extensive analysis 
 of the dynamics present in a number of commonly used real-life event logs. 
 
 These case studies, conducted for the 
-[BPM paper](https://github.com/BrechtWts/DyLoPro/blob/master/DyLoPro_Framework_Preprint.pdf), 
+[BPM paper](https://doi.org/10.1007/978-3-031-41620-0_9), 
 can be found [here](https://github.com/BrechtWts/DyLoPro_CaseStudies).
 
 ## Contributing 
